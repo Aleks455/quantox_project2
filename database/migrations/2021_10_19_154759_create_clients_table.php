@@ -16,9 +16,14 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('email')->unique();
+            $table->string('name');
+            $table->intiger('mobile_num');
+            $table->string('email');
             $table->string('address');
+            $table->string('city');
+            $table->integer('postal_code');
+            $table->string('country');
+            $table->boolean('is_active')->default('true');//da li treba i ovde dodati?
             $table->timestamps();
         });
     }

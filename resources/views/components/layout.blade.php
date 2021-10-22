@@ -1,3 +1,4 @@
+@props(['name'])
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,36 +12,45 @@
     <body class="bg-gray-200">
         <header class="">
             <nav class="p-6 bg-white flex justify-between mb-7">
-                <button>
-                    <a href="" class="p-3">Dashboard</a>
-                </button>
-                {{-- <ul class="flex align-items-center">
-                    <li>
-                        <a href="" class="p-3">Home</a>
-                    </li>
-                    <li>
-                        <a href="" class="p-3">Invoices</a>
-                    </li>
-                </ul> --}}
-                <ul class="flex align-items-center">
-                    <li>
-                        <a href="" class="p-3">Admin</a>
-                    </li>
-                    <li>
-                        <a href="" class="p-3">Login</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('register') }}" class="p-3">Register</a>
-                    </li>
-                    <li>
-                        <a href="" class="p-3">Logout</a>
-                    </li>
-                </ul>
+                @auth
+                   <button><a href="{{ route('admin') }}" class="p-3"> {{ $name }}</a></button>
+                    {{-- <ul class="flex align-items-center">
+                        <li>
+                            <a href="" class="p-3">Invoices</a>
+                        </li>
+                        <li>
+                            <a href="" class="p-3">New invoice</a>
+                        </li>
+                        <li>
+                            <a href="" class="p-3">Clients</a>
+                        </li>
+                    </ul> --}}
+                @endauth
+
+                @guest
+                    <img src="" alt="Invoice app logo">
+                @endguest
+                
+                @auth
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="mr-8">Logout</button> 
+                    </form>                      
+                @endauth
+
+                @guest
+                    <ul class="flex align-items-center">
+                        <li>
+                            <a href="{{ route('login') }}" class="p-3">Login</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}" class="p-3">Register</a>
+                        </li>
+                    </ul>
+                @endguest                  
             </nav>
         </header>
-
-        
-        
+  
         {{ $slot }}
     </body>
 </html>
