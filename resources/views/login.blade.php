@@ -8,8 +8,15 @@
 
                 <h1 class="text-center mb-4">Login please</h1>
 
-                <x-form.input_register name="email" placeholder="example@mail.com" type="email" label="Email"/>
-                <x-form.input_register name="password" placeholder="yourpassword" type="password" label="Password"/>
+                <x-form.input name="email" placeholder="example@mail.com" type="email" label="Email"/>
+                <x-form.input name="password" placeholder="yourpassword" type="password" label="Password"/>
+
+                <div class="mb-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" name="remember" id="remember" class="mr-2"> 
+                        <label for="remember">Remember me</label>
+                    </div>
+                </div>
 
                 <x-form.button>Log in</x-form.button>
             </form>

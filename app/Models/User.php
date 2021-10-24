@@ -8,9 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +26,19 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
-        'password'
+        'password',
+
+        'company_name',
+        'company_number',
+        'vat_id',
+        'company_address',
+        'city',
+        'state',
+        'postal_code',
+        'phone_number',
+        'bank_account'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,4 +58,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }
+

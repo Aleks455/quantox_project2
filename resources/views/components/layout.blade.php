@@ -13,18 +13,15 @@
         <header class="">
             <nav class="p-6 bg-white flex justify-between mb-7">
                 @auth
-                   <button><a href="{{ route('admin') }}" class="p-3"> {{ $name }}</a></button>
-                    {{-- <ul class="flex align-items-center">
-                        <li>
-                            <a href="" class="p-3">Invoices</a>
-                        </li>
-                        <li>
-                            <a href="" class="p-3">New invoice</a>
-                        </li>
-                        <li>
-                            <a href="" class="p-3">Clients</a>
-                        </li>
-                    </ul> --}}
+                    <div class="pl-5">
+                        <button class="pr-5">
+                            <a href="">Invoices</a>
+                        </button> 
+                     
+                        <button class="pl-2">
+                            <a href="{{ route('clients') }}">Clients</a>
+                        </button>
+                    </div>
                 @endauth
 
                 @guest
@@ -32,10 +29,15 @@
                 @endguest
                 
                 @auth
+                <div>
+                    <button class="pr-5">
+                        <a href="{{ route('admin') }}" class="p-3"> {{ auth()->user()->first_name }}</a>
+                    </button>
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="mr-8">Logout</button> 
-                    </form>                      
+                    </form>  
+                </div>                    
                 @endauth
 
                 @guest

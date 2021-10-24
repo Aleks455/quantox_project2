@@ -16,14 +16,17 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->string('name');
-            $table->intiger('mobile_num');
+            $table->string('company_number');
+            $table->string('vat_id');
+            $table->bigInteger('bank_account');
+            $table->bigInteger('phone_number');
             $table->string('email');
             $table->string('address');
             $table->string('city');
             $table->integer('postal_code');
             $table->string('country');
-            $table->boolean('is_active')->default('true');//da li treba i ovde dodati?
             $table->timestamps();
         });
     }

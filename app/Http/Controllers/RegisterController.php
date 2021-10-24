@@ -42,7 +42,7 @@ class RegisterController extends Controller
         //     'city' => 'required',
         //     'state' => 'required',
         //     'postal_code' => 'required|size:5',
-        //     'phone_number' => 'required|numeric|min:9|max:10',
+        //     'phone_number' => 'required|numeric',
         //     'bank_account' => 'required|numeric|size:18',
         // ]);
         

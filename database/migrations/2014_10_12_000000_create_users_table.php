@@ -20,20 +20,20 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();delete
-            // $table->boolean('is_active')->default('true'); //add this one
+            $table->boolean('is_active')->default('1');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             
-            $table->string('company_name');
-            $table->integer('company_number');
-            $table->string('vat_id');
-            $table->string('company_address');
-            $table->string('city');
-            $table->string('state');
-            $table->integer('postal_code');
-            $table->integer('phone_number');
-            $table->integer('bank_account');
+            $table->string('company_name')->nullable();
+            $table->integer('company_number')->nullable();
+            $table->string('vat_id')->nullable();
+            $table->string('company_address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->integer('postal_code')->nullable();
+            $table->integer('phone_number')->nullable();
+            $table->integer('bank_account')->nullable();
         });
     }
 
