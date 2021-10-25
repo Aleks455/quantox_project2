@@ -5,9 +5,9 @@
         <div class="w-4/12 bg-white p-6 rounded-lg">
 
             <form action="{{ route('register') }}" method="POST">
+                @csrf
                 <h1 class="text-center mb-4">Please register</h1>
 
-                @csrf
                 <x-form.input name="email" placeholder="example@mail.com" type="email" label="Email"/>
                 <x-form.input name="first_name" placeholder="John" type="text" label="First Name"/>
                 <x-form.input name="last_name" placeholder="Doe"  type="text" label="Last Name"/>

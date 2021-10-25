@@ -17,9 +17,9 @@
                         <x-list.item label='Vat ID'>{{ $client->vat_id }} </x-list.item>
                         <x-list.item label='Address'>{{ $client->address }} </x-list.item>
                         <x-list.item label='City'>{{ $client->city }} </x-list.item>
-                        <div class="flex items-center">
-                            <a href="" class="pl-5"> Edit</a>
-                            <a href="" class="pl-5"> Delete</a>
+                        <div class="flex items-center justify-around">
+                            <a href="" class=""> Edit</a>
+                            <a href="" class=""> Delete</a>
                         </div>
             
                     </x-list.field>
