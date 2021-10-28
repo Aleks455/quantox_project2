@@ -16,8 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(2)
-        ->has(Client::factory(2))
-        ->create();
+
+        $users = User::factory(3)->create();
+
+        foreach($users as $user){
+            
+            Client::factory(3)
+            ->hasInvoice (2,[
+                'user_id' => $user->id
+            ])
+            ->create([
+                'user_id' => $user->id
+            ]);
+        }
+            
     }
 }

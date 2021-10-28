@@ -1,39 +1,36 @@
 <x-layout>
-
-    <div class="flex justify-center">
-        <div class="w-8/12 bg-white p-6 rounded-lg">
-            <div class=" border-b-2 flex flex-auto justify-end">
-                <button class="border border-green-200 rounded p-3 my-5 bg-green-100 hover:bg-green-200">
-                    <a href="clients/create" class=""> + Create New Client</a>
-                </button>
-             </div>
-
-            <h1 class="text-center p-10"> Clients List</h1>
-
-            {{-- {{-- @if (!empty($clients)) -- ne radi}} --}}
-                @foreach ($clients as $client)
-                    <x-list.field>
-                        <x-list.item label='Name'>{{ $client->name }} </x-list.item>
-                        <x-list.item label='Vat ID'>{{ $client->vat_id }} </x-list.item>
-                        <x-list.item label='Address'>{{ $client->address }} </x-list.item>
-                        <x-list.item label='City'>{{ $client->city }} </x-list.item>
-                        <div class="flex items-center justify-around">
-                            <a href="" class=""> Edit</a>
-                            <a href="" class=""> Delete</a>
-                        </div>
-            
-                    </x-list.field>
-                     
-                @endforeach
-{{-- 
-            @else
-                <div>Add clients</div>
-            @endif --}} 
-            {{-- ne radi --}}
-
+    <x-body>
+        <div class=" border-b-2 flex flex-auto justify-end">
+            <x-list.button>
+                <a href="{{ route('clients.create') }}" class=""> + Create New Client</a>
+            </x-list.button>
         </div>
-       
-    </div>
 
+        <x-list.heading>Clients List</x-list.heading>
 
+        @if ($clients->count()) 
+            @foreach ($clients as $client)
+                <x-list.field>
+                    <x-list.item value='overflow-hidden' label='Name'>{{ $client->name }} </x-list.item>
+                    <x-list.item value='overflow-hidden' label='Vat ID'>{{ $client->vat_id }} </x-list.item>
+                    <x-list.item value='overflow-hidden' label='Address'>{{ $client->address }} </x-list.item>
+                    <x-list.item value='overflow-hidden' label='City'>{{ $client->city }} </x-list.item>
+                    
+                    <div class="flex-wrap  justify-around text-sm">
+                        <x-list.button color="gray"> 
+                            <a href="{{ route('client.show', $client->name) }}" class="">Show</a>
+                        </x-list.button>
+                        <x-list.button color="blue"> 
+                            <a href="{{ route('client.edit',  $client->name) }}" class="">Edit</a>
+                        </x-list.button>
+                        <x-list.button color="red"> 
+                            <a href="{{ route('client.destroy', $client->name) }}" class="">Delete</a>
+                        </x-list.button>
+                    </div>
+                </x-list.field>     
+            @endforeach
+        @else
+            <div class="italic text-center">The list is empty, please add clients</div>
+        @endif 
+    </x-body>
 </x-layout>

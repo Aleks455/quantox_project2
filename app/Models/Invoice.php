@@ -12,12 +12,22 @@ class Invoice extends Model
     protected $table = 'invoices';
 
     protected $fillable = [
-        
+        'user_id',
+        'client_id',
+        'service_name',
+        'price',
+        'quantity',
+        'total_price' 
     ];
     
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }
 

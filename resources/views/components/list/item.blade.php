@@ -1,7 +1,9 @@
-@props(['label'])
+@props(['label', 'value' ])
 
 <div class="p-3">
-    <div class="">{{ $label }}:</div>
+    <div class="bg-gray-100 rounded">{{ $label }}:</div>
     <hr>
-    <div class="name">{{ $slot }}</div>
+    <div class="name w-36 {{ isset($value)?  $value: ''}}">
+        {{ $slot }}
+    </div>
 </div>

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-
 class LoginController extends Controller
 {
 
@@ -36,7 +35,7 @@ class LoginController extends Controller
 
         session()->regenerate();
 
-        return redirect('/admin');
+        return redirect('/user');
         // ->with('success', 'Welcome Back!'); napraviti kasnije
     }
 }

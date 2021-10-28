@@ -20,12 +20,12 @@ class CreateClientsTable extends Migration
             $table->string('name');
             $table->string('company_number');
             $table->string('vat_id');
-            $table->bigInteger('bank_account');
-            $table->bigInteger('phone_number');
+            $table->string('bank_account');
+            $table->string('phone_number');
             $table->string('email');
             $table->string('address');
             $table->string('city');
-            $table->integer('postal_code');
+            $table->string('postal_code');
             $table->string('country');
             $table->timestamps();
         });

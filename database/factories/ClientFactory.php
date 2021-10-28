@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class ClientFactory extends Factory
 {
@@ -23,16 +24,16 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
+            'user_id'=> User::factory(),
             'name' => $this->faker->company(),
-            // 'user_id'=>
-            'company_number' => $this->faker->randomNumber(),
-            'vat_id' => $this->faker->randomNumber(),
-            'bank_account' => $this->faker->randomNumber(),
+            'company_number' => $this->faker->ean8(),
+            'vat_id' => $this->faker->ean8(),
+            'bank_account' => $this->faker->numberBetween (100000000000000000, 900000000000000000),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone_number'=> $this->faker->randomNumber(),
+            'phone_number'=> $this->faker->e164PhoneNumber(),
             'address'=> $this->faker->streetAddress(),
             'city' => $this->faker->city(),
-            'postal_code'=> $this->faker->numberBetween(10000,99999),
+            'postal_code'=> $this->faker->postcode(),
             'country'=> $this->faker->country(),
 
         ];

@@ -26,14 +26,14 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             
             $table->string('company_name')->nullable();
-            $table->integer('company_number')->nullable();
+            $table->string('company_number')->nullable();
             $table->string('vat_id')->nullable();
             $table->string('company_address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->integer('postal_code')->nullable();
-            $table->integer('phone_number')->nullable();
-            $table->integer('bank_account')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('bank_account')->nullable();
         });
     }
 

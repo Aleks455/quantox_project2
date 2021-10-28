@@ -29,6 +29,7 @@ class RegisterController extends Controller
             'last_name' => 'required|max:225',
             'password' => 'required|confirmed|min:8',
             'terms' => 'required',
+            
         ]);
 
        
@@ -51,6 +52,7 @@ class RegisterController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'password' => Hash::make($request->password),
+            'remember_token' =>request()->_token,
 
     //         'company_name' => $request->company_name,
     //         'company_number' => $request->company_number,
@@ -70,7 +72,7 @@ class RegisterController extends Controller
 
 
         // return redirect('/')->with('success', 'Your account has been created.');
-        return redirect()->route('admin');
+        return redirect()->route('user');
 
     }
 

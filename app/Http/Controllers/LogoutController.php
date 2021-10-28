@@ -10,9 +10,7 @@ class LogoutController extends Controller
     //
     public function destroy()
     {
-        // dd('asd');
         Auth::logout();
-        
         return redirect()->route('login');
     }
 }
