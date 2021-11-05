@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 
+
 class InvoiceController extends Controller
 {
     public function index()
@@ -17,23 +18,34 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        return view('invoices.create');
+        return view('invoices.create', [
+            'clients' => auth()->user()->clients
+        ]);
     }
 
     public function store(Request $request)
     {
-        $this->validate($request,[
-            
-        ]);
 
-        auth()->user()->invoices()->create([
-            
-        ]);
+        dd($request);
+        // $this->validate($request,[
+        //     'user_id' => 'required',
+        //     'client_id' => 'required',
+        //     'service_name' => 'required',
+        //     'price' => 'required',
+        //     'quantity' => 'required',
+        //     'total_price' => 'required'
 
-        //message if it's stored successfully
+        // ]);
 
-        return redirect()->route('invoices');
+        // auth()->user()->invoices()->create([
+        //     'client_id' => $this->
+        //     'service_name' =>
+        //     'price' =>
+        //     'quantity' =>
+        //     'total_price' =>
+        // ]);
 
+        // return redirect()->route('invoices');
     }
 
     public function show (Invoice $invoice)

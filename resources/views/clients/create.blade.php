@@ -2,7 +2,7 @@
     <x-body>
         <div class=" border-b-2 flex flex-auto">
             <x-list.button>
-                <a href="{{ route('clients') }}" class="">Back</a>
+                <a href = "{{ route('clients') }}" class ="">Back</a>
             </x-list.button>
         </div>
 

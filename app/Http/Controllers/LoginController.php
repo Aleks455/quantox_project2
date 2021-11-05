@@ -9,10 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-
     public function index()
     {
-
         return view('login');
     }
 
@@ -28,14 +26,9 @@ class LoginController extends Controller
                 'email' => 'Your provided credentials could not be verified.'
             ]);
         } 
-        //ovo iznad ili 
-        // if(!auth()->attempt($request->only('email','password'))) {
-        //     return back()->with('status', 'Invalid login details');
-        // }
 
         session()->regenerate();
 
         return redirect('/user');
-        // ->with('success', 'Welcome Back!'); napraviti kasnije
     }
 }

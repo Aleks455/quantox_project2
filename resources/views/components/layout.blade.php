@@ -31,7 +31,7 @@
                 @auth
                 <div>
                     <button class="pr-5">
-                        <a href="{{ route('user') }}" class="p-3"> {{ auth()->user()->first_name }}</a>
+                        <a href="{{ route('user') }}" class="p-3">{{ auth()->user()->first_name }}</a>
                     </button>
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf

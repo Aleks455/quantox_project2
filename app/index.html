@@ -1,6 +1,5 @@
 
 2. sta treba da se ocisti od datih fajlova od strane laravela?
-3. ko ima 'aktivan' opciju, klijent ili admin?
 
 4. kako da dodam formu da se otvara na klik, vrati informacije validacije i da se zatvori tek kad su sva polja ispravno uneta?
 
@@ -10,7 +9,7 @@ kao da klijet ne postoji ali se pokazuje kolekcija i relationship tip
 9. ponavlja se client back button. napraviti jedan
 
 11. sredi edit stranicu key-value pairs/ double foreach
-12. uraditi update kod admina
+
 13. paginacija strane klijenata
 14. grupisati klijent rute.
 
@@ -23,3 +22,126 @@ Registracija: Validacija postojeceg korisnika se vrsi tek na drugoj stranici (pr
 17. da li treb da stavim regular expressions constrain: https://laravel.com/docs/8.x/routing#parameters-regular-expression-constraints
 
 -invoice stranice, logo
+
+18.//odvojiti validaciju?
+
+// public function validate (Request $request)
+// {
+//    $request =  $this->validate($request,[
+//         'name' => 'required|max:225',
+//         'company_number' => 'required|max:225|unique:clients,company_number',
+//         'vat_id' => 'required|max:225',
+//         'bank_account' => 'required|numeric',
+//         'phone_number' => 'required|numeric',
+//         'email' => 'required|email|max:255|unique:clients,email',
+//         'address' => 'required|max:225',
+//         'city' => 'required|max:225',
+//         'postal_code' => 'required|size:5',
+//         'country' => 'required|max:225',
+//     ]);
+//     return $request;
+// }
+
+19. store: 
+// varijanta 1
+        // Client::create([
+        //     'name' => $request->name,
+        //     'user_id'=>auth()->user()->id,
+        //     'company_number' => $request->company_number,
+        //     'vat_id' => $request->vat_id,
+        //     'bank_account' => $request->bank_account,
+        //     'phone_number' => $request->phone_number,
+        //     'email' => $request->email,
+        //     'address' => $request->address,
+        //     'city' => $request->city,
+        //     'postal_code' => $request->postal_code,
+        //     'country' => $request->country,
+        // ]);
+
+        // varijanta2
+        // Client::create($request->All[]);
+
+
+
+
+20.        class RegisterController extends Controller
+{
+    public function index()
+    {
+        return view('register');
+    }
+
+    public function store(Request $request)
+    {      
+        //validate
+        //store the user
+        //sign the user in
+        //rederect the user
+    
+        $this->validate($request,[
+            'email' => 'required|email|max:255|unique:users,email',
+            'first_name' => 'required|max:225',
+            'last_name' => 'required|max:225',
+            'password' => 'required|confirmed|min:8',
+            'terms' => 'required',
+            
+        ]);
+
+       
+        // auth()->login(User::create($attributes));
+
+        // $fillable = $this->validate($request,[
+        //     'company_name' => 'required|max:225|unique:users,company_name',
+        //     'company_number' => 'required|max:225|unique:users,company_number',
+        //     'vat_id' => 'required',
+        //     'company_address' => 'required|mixed',
+        //     'city' => 'required',
+        //     'state' => 'required',
+        //     'postal_code' => 'required|size:5',
+        //     'phone_number' => 'required|numeric',
+        //     'bank_account' => 'required|numeric|size:18',
+        // ]);
+        
+        User::create([
+            'email' => $request->email,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'password' => Hash::make($request->password),
+            'remember_token' =>request()->_token,
+
+    //         'company_name' => $request->company_name,
+    //         'company_number' => $request->company_number,
+    //         'vat_id' => $request->vat_id,
+    //         'company_address' => $request->company_address,
+    //         'city' => $request->city,
+    //         'state' => $request->state,
+    //         'postal_code' => $request->postal_code,
+    //         'phone_number' => $request->phone_number,
+    //         'bank_account' => $request->bank_account
+        ]);
+
+        // sign in user
+
+        Auth::attempt($request->only('email','password'));
+        // auth()->user(); //auth helper gives back user model
+
+
+        // return redirect('/')->with('success', 'Your account has been created.');
+        return redirect()->route('user');
+
+    }
+
+   
+}
+
+za storniranje:
+// if(!auth()->attempt($request->only('email','password'))) {
+//     return back()->with('status', 'Invalid login details');
+// }
+// ->with('success', 'Welcome Back!'); napraviti kasnije
+
+
+za update: 
+// $client->update($request()->all()); 
+
+

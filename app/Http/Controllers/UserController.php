@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -16,7 +17,7 @@ class UserController extends Controller
 {
     public function index()
     {
-
+       dd(auth()->user());
         return view('user.profile', [
             'user' => auth()->user()
         ]);

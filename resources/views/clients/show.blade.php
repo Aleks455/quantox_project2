@@ -23,9 +23,12 @@
                         <x-list.button color="blue"> 
                             <a href="{{ route('client.edit',  $client->name) }}" class="">Edit</a>
                         </x-list.button>
-                        <x-list.button color="red"> 
-                            <a href="{{ route('client.destroy', $client->name) }}" class="">Delete</a>
-                        </x-list.button>
+                        <form action="{{ route('client.destroy', $client->name) }}" class="inline">
+                            @csrf
+                            <x-list.button color="red"> 
+                                Delete
+                            </x-list.button>
+                        </form>
                     </div>
                 </x-list.field>     
             @endforeach
