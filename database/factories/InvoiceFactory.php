@@ -26,6 +26,7 @@ class InvoiceFactory extends Factory
     public function definition()
     {
          
+
         return [
             // 'user_id' => $user_id,
             // 'client_id' => $client_id
