@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Invoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ItemFactory extends Factory
@@ -21,11 +22,19 @@ class ItemFactory extends Factory
      * @return array
      */
     public function definition()
-    {
+    {   $invoices = Invoice::pluck('id');
+        $invoice_id = $invoices[0];
+
+        $price = $this->faker->numberBetween(500,1000);
+        $quantity = $this->faker->numberBetween(1,5);
+        $total = $price * $quantity;
+
         return [
-            'user_id' => User::factory(),
-            'name' => $this->faker->name(),
-            'price' => $this->faker->numberBetween(500,1000)
+            'invoice_no' => $invoice_id, 
+            'name' => $this->faker->randomElement(['Web Designe','Database update','Plug-in update']),
+            'price' => $price,
+            'quantity' => $quantity,
+            'total' => $total
         ];
     }
 }

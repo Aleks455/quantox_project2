@@ -20,37 +20,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     { 
-
-
-        // $this->call([
-        //     UserSeeder::class,
-        //     ClientSeeder::class,
-        //     ItemSeeder::class
-        // ]);
-
-
-        $user = User::factory()->create([
-            'id' => '1',
-            'first_name' => 'Aleksandra',
-            'last_name' => 'Petrovic',
-            'email' => 'ap@ap.com',
-            'password' => Hash::make('11111111')
-        ]);
-  
-        Client::factory(3)
-        ->hasInvoice (2,[
-            'user_id' => $user->id,
-            'user_name' => $user->first_name
-        ])
-        ->create([
-            'user_id' => $user->id
-        ]);
-
-        Item::factory()->create([
-            'user_id' => $user->id,
-            'name' => 'Web Designe'
-        ]);
-            
-
+        User::factory()->create();
+        Client::factory(3)->create();
+        Invoice::factory(2)->create();
+        Item::factory(5)->create();
     }
 }

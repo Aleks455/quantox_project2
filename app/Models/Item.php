@@ -12,14 +12,12 @@ class Item extends Model
     protected $table = 'items';
 
     protected $fillable = [
+        'invoice_no',
         'name',
-        'price'
+        'price',
+        'quantity',
+        'total'
     ];
-
-    // public function serviceItem()
-    // {
-    //     return $this->belongsTo(ServiceItem::class);
-    // }
 
     public function user()
     {

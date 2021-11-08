@@ -23,8 +23,10 @@ class ClientFactory extends Factory
      */
     public function definition()
     {
+        $users = User::get();
+        $user_id = $users[0]->id;
         return [
-            'user_id'=> User::factory(),
+            'user_id'=> $user_id,
             'name' => $this->faker->company(),
             'company_number' => $this->faker->ean8(),
             'vat_id' => $this->faker->ean8(),

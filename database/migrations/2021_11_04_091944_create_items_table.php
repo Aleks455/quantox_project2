@@ -15,9 +15,11 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('invoice_no');
             $table->string('name');
             $table->integer('price');
+            $table->integer('quantity');
+            $table->integer('total');
             $table->timestamps();
         });
     }

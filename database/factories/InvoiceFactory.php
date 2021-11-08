@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Client;
-use App\Models\ServiceItem;
+use App\Models\Item;
 
 class InvoiceFactory extends Factory
 {
@@ -25,19 +25,23 @@ class InvoiceFactory extends Factory
      */
     public function definition()
     {
-        $price = $this->faker->numberBetween(100,1000);
-        $quantity = $this->faker->numberBetween(1,5);
-        return [
-            'user_id' => User::factory(),
-            'user_name' => $this->faker->name(),
-            'client_id' => Client::factory(),
-            // 'services_id' => ServiceItem::factory(),
-            'service_name' => $this->faker->name(),
-            'price' => $price,
-            'quantity' => $quantity,
-            'grand_total' => $price * $quantity,
-            'grand_total' => $this->faker->numberBetween(1000,2000)
+        $users = User::pluck('id');
+        $user_id = $users[0];
 
+
+        $clients = Client::pluck('id');
+        $client_id = $clients[0];    
+
+        // $items_total = Item::get()->pluck('total');
+        // $grand_total = 0;
+        // foreach($items_total as $item_total){
+        //     $grand_total += $item_total;
+        // }
+
+        return [
+            'user_id' => $user_id,
+            'client_id' => $client_id
+            // 'grand_total' => $grand_total
         ];
     }
 }
