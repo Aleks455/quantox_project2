@@ -17,7 +17,7 @@ class UserController extends Controller
 {
     public function index()
     {
-       dd(auth()->user());
+    //    dd(auth()->user());
         return view('user.profile', [
             'user' => auth()->user()
         ]);

@@ -25,9 +25,15 @@ Route::get('/', function(){
         return redirect(route('user'));
     }else {
         return redirect(route('login'));
- 
     }
+});
 
+Route::get('/home', function(){
+    if('auth'){
+        return redirect(route('user'));
+    }else {
+        return redirect(route('login'));
+    }
 });
 
 

@@ -20,9 +20,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     { 
-        User::factory()->create();
-        Client::factory(3)->create();
-        Invoice::factory(2)->create();
-        Item::factory(5)->create();
+        $user = User::factory()->create();
+        $client = Client::factory(3)->create([
+            'user_id' => $user->id
+        ]);
+        $invoice = Invoice::factory(2)->create([
+            'user_id' => $user->id,
+            'client_id' => $client[0]->id
+        ]);
+        Item::factory(5)->create([
+            'invoice_no' => $invoice[0]->id
+        ]);
     }
 }
