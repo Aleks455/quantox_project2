@@ -22,23 +22,30 @@ class DatabaseSeeder extends Seeder
     { 
         $user = User::factory()->create();
 
-        $client = Client::factory(3)->create([
+        $clients = Client::factory(10)->create([
             'user_id' => $user->id
         ]);
 
-        $invoices = Invoice::factory(2)->create([
-            'user_id' => $user->id,
-            'client_id' => $client[0]->id
-        ]);
+        foreach($clients as $client) {
 
-        $items = Item::factory(5)->create([
-            'invoice_no' => $invoices[0]->id
-        ]);
+            for($i = 0; $i < 3; $i++) {
+                $invoices = Invoice::factory()->create([
+                    'user_id' => $user->id,
+                    'client_id' => $client->id
+                ]);
+                
+                $items = Item::factory(5)->create([
+                    'invoice_no' => $invoices->id
+                ]);
+                
+                $grand_total = $items->sum('total');
 
-        $grand_total = $items->sum('total');
-        foreach($invoices as $invoice) {
-            $invoice->grand_total = $grand_total;
-            $invoice->save();
-        } 
+                $invoices->grand_total = $grand_total;
+                $invoices->save();
+            }
+           
+        }
+       
+       
     }
 }

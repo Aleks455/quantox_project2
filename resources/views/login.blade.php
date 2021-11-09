@@ -1,5 +1,4 @@
 <x-layout>
-
     <div class="flex justify-center">
         <div class=" bg-white p-6 rounded-lg">
             <form action="/login" method="POST">

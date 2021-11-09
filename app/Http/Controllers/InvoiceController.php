@@ -11,8 +11,7 @@ class InvoiceController extends Controller
     public function index()
     {
         return view('invoices.show', [         
-            'invoices' => auth()->user()->invoices(),
-            //paginate
+            'invoices' => auth()->user()->invoices()->paginate(10),
         ]);
     }
 
@@ -27,25 +26,25 @@ class InvoiceController extends Controller
     {
 
         dd($request);
-        // $this->validate($request,[
-        //     'user_id' => 'required',
-        //     'client_id' => 'required',
-        //     'service_name' => 'required',
-        //     'price' => 'required',
-        //     'quantity' => 'required',
-        //     'total_price' => 'required'
+        $this->validate($request,[
+            'user_id' => 'required',
+            'client_id' => 'required',   
+            'grand_total' => 'required',
+            'date' => 'required',
+            'due_date' => 'required'
+        ]);
 
-        // ]);
+        auth()->user()->invoices()->create([
+            'user_id' => $request->user_id,
+            'client_id' => $request->client_id,
+            'grand_total' => $request->grand_total,
+            'date' => $request->date,
+            'due_date' => $request->due_date,
+            'remember_token' =>request()->_token,
+            
+        ]);
 
-        // auth()->user()->invoices()->create([
-        //     'client_id' => $this->
-        //     'service_name' =>
-        //     'price' =>
-        //     'quantity' =>
-        //     'total_price' =>
-        // ]);
-
-        // return redirect()->route('invoices');
+        return redirect()->route('invoices.index');
     }
 
     public function show (Invoice $invoice)
@@ -85,6 +84,6 @@ class InvoiceController extends Controller
     public function destroy (Invoice $invoice)
     {
         $invoice->delete();
-        return redirect()->route('invoices');
+        return redirect()->route('invoices.index');
     }
 }

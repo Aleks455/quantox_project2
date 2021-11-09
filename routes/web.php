@@ -57,10 +57,10 @@ Route::get('/clients/edit/{client:name}', [ClientController::class, 'edit'])->na
 Route::post('/clients/update', [ClientController::class, 'update'])->name('client.update')->middleware('auth');
 Route::get('/clients/delete/{client:name}', [ClientController::class, 'destroy'])->name('client.destroy')->middleware('auth');
 
-Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices')->middleware('auth');
+Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index')->middleware('auth');
 Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create')->middleware('auth');
 Route::post('/invoices/create', [InvoiceController::class, 'store'])->middleware('auth');
-Route::get('/invoices/show/{invoice:id}', [InvoiceController::class, 'show'])->name('invoice.show')->middleware('auth');
-Route::get('/invoices/show/{invoice:id}', [InvoiceController::class, 'edit'])->name('invoice.edit')->middleware('auth');
-Route::post('/clients/update', [ClientController::class, 'update'])->name('client.update')->middleware('auth');
-Route::get('/invoices/delete/{invoice:id}', [InvoiceController::class, 'destroy'])->name('invoice.destroy')->middleware('auth');
+Route::get('/invoices/show/{invoice:id}', [InvoiceController::class, 'show'])->name('invoices.show')->middleware('auth');
+Route::get('/invoices/edit/{invoice:id}', [InvoiceController::class, 'edit'])->name('invoices.edit')->middleware('auth');
+Route::post('/invoices/update', [InvoiceController::class, 'update'])->name('invoices.update')->middleware('auth');
+Route::get('/invoices/delete/{invoice:id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy')->middleware('auth');

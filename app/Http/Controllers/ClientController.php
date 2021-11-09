@@ -15,7 +15,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('clients.show', [         
-            'clients' => auth()->user()->clients()->paginate(5),
+            'clients' => auth()->user()->clients()->paginate(10),
             //paginate
         ]);
     }

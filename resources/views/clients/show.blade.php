@@ -35,5 +35,8 @@
         @else
             <div class="italic text-center">The list is empty, please add clients</div>
         @endif 
+        <div class="pt-5">                                     
+            {{$clients->links()}}
+        </div>
     </x-body>
 </x-layout>

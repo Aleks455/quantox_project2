@@ -25,12 +25,11 @@ class InvoiceFactory extends Factory
      */
     public function definition()
     {
-         
+         $date = $this->faker->now('Y-m-d');
 
         return [
-            // 'user_id' => $user_id,
-            // 'client_id' => $client_id
-            // 'grand_total' => $grand_total
+            'date' => $date,
+            'due_date' => $this->faker->dateTimeBetween('now','+10 days')
         ];
     }
 }

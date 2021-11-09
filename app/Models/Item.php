@@ -11,6 +11,8 @@ class Item extends Model
 
     protected $table = 'items';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'invoice_no',
         'name',

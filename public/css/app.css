@@ -1,6 +1,7 @@
 /*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap');
 
 /*
 Document
@@ -31,6 +32,32 @@ html {
 1. Correct the line height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
 */
+
+/**
+Added
+**/
+
+body, a, button, form {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+nav {
+  color:gray;
+}
+
+button:hover, a:hover {
+  color: black;
+  font-weight:500;
+}
+
+input:focus {
+  color:none;
+}
+
+
+/**
+Added finished
+**/
 
 html {
   line-height: 1.15; /* 1 */

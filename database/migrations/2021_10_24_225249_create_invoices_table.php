@@ -18,6 +18,8 @@ class CreateInvoicesTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->foreignId('client_id'); 
             $table->integer('grand_total')->nullable();
+            $table->string('date');
+            $table->string('due_date');
             $table->timestamps();
         });
     }
