@@ -29,6 +29,6 @@ class LoginController extends Controller
 
         session()->regenerate();
 
-        return redirect('/user');
+        return redirect('/dashboard')->with('message', 'Welcome ' . auth()->user()->first_name . ' !');
     }
 }

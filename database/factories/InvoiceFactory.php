@@ -25,11 +25,11 @@ class InvoiceFactory extends Factory
      */
     public function definition()
     {
-         $date = $this->faker->now('Y-m-d');
+         $date = $this->faker->dateTimeBetween('now', '+10 days');
 
         return [
             'date' => $date,
-            'due_date' => $this->faker->dateTimeBetween('now','+10 days')
+            'due_date' => $this->faker->dateTimeBetween($date,'+10 days'),
         ];
     }
 }

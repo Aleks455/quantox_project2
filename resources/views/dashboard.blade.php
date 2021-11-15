@@ -8,5 +8,10 @@
 
         <x-list.heading>Dashboard</x-list.heading>
 
+        @if ($message = Session::get('message'))
+            <div class="m-auto font-bold p-2">
+                <p class="text-center text-2xl font-bold">{{ $message }}</p>
+            </div>
+        @endif
     </x-body>
 </x-layout>

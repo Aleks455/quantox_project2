@@ -5,31 +5,36 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
         <title>Invoice application</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        {{-- <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap');
-
-            
-        </style> --}}
+        
+        <script src="{{ asset('js/app.js') }}"></script>
     </head>
     <body class="bg-gray-200 text-sm text-gray-800 tracking-wider font-weight-500">
-        <header class="">
-            <nav class="p-6 bg-white flex justify-between mb-7 hover-text-gray-700 ">
+        <header>
+            <nav class="p-6 bg-white flex justify-between mb-7 hover-text-gray-700">
                 @auth
                     <div class="pl-5">
-                        <button class="pr-5 tracking-wider">
+                        <button class="pr-3 tracking-wider">
+                            <a href="{{ route('dashboard.index') }}">Dashboard</a>
+                        </button> 
+
+                        <button class="pr-3 tracking-wider">
                             <a href="{{ route('invoices.index') }}">Invoices</a>
                         </button> 
                      
-                        <button class="pl-2 tracking-wider hover-text-800">
+                        <button class="tracking-wider hover-text-800">
                             <a href="{{ route('clients') }}">Clients</a>
                         </button>
                     </div>
                 @endauth
 
                 @guest
-                    <img src="" alt="Invoice app logo">
+                <div class="w-8">    
+                    <img src="images/invoice2.png" alt="Invoice app logo">
+                </div>
                 @endguest
                 
                 @auth
@@ -45,7 +50,7 @@
                 @endauth
 
                 @guest
-                    <ul class="flex align-items-center">
+                    <ul class="flex">
                         <li>
                             <a href="{{ route('login') }}" class="p-3 tracking-wider">Login</a>
                         </li>

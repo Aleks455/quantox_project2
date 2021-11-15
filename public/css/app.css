@@ -36,6 +36,9 @@ html {
 /**
 Added
 **/
+.page-break {
+  page-break-after: always;
+}
 
 body, a, button, form {
   font-family: 'Inter', sans-serif;
@@ -53,6 +56,7 @@ button:hover, a:hover {
 input:focus {
   color:none;
 }
+
 
 
 /**

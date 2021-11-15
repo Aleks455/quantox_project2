@@ -33,7 +33,7 @@ class User extends Authenticatable
         'state',
         'postal_code',
         'phone_number',
-        'bank_account'
+        'bank_account',
     ];
 
 

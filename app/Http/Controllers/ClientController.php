@@ -56,17 +56,17 @@ class ClientController extends Controller
         return redirect()->route('clients');
     } 
 
-    public function show (Client $client)
+    public function show(Client $client)
     {
         return view('clients.show-one', ['client' => $client]);
     }
 
-    public function edit (Client $client)
+    public function edit(Client $client)
     {
         return view('clients.edit', ['client' => $client]);
     }
 
-    public function update (Request $request)
+    public function update(Request $request)
     {
         $this->validate($request,[
             'name' => 'required|max:225',
@@ -97,7 +97,7 @@ class ClientController extends Controller
         return redirect()->route('clients');
     }
 
-    public function destroy (Client $client)
+    public function destroy(Client $client)
     {
         $client->delete();
         return redirect()->route('clients');

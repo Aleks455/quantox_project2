@@ -14,11 +14,11 @@ class Item extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'invoice_no',
+        'invoice_id',
         'name',
         'price',
         'quantity',
-        'total'
+        'total',
     ];
 
     public function user()
@@ -28,7 +28,7 @@ class Item extends Model
 
     public function invoices()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->belongsTo(Invoice::class);
     }
 
 }

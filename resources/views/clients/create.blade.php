@@ -6,11 +6,11 @@
             </x-list.button>
         </div>
 
+        <x-list.heading>New Client</x-list.heading>
+
         <form action="{{ route('clients.create') }}" method="POST">
             @csrf
-            
-            <x-list.heading>New Client</x-list.heading>
-            
+                        
             <div class="flex flex-wrap flex-lg-columns justify-around">
                 <x-form.input name="name" placeholder="Company LLC / John Doe" type="text" label="Name"/>
                 <x-form.input name="company_number" placeholder="SE0000000" type="text" label="Company Number"/>

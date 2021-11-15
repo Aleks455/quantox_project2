@@ -6,11 +6,11 @@
             </x-list.button>
         </div>
 
+        <x-list.heading>New Client</x-list.heading>
+
         <form action="{{ route('client.update') }}" method="POST">
             @csrf
-            
-            <x-list.heading>New Client</x-list.heading>
-            
+                        
             <x-form.input name="id" placeholder="" type="hidden" label="" value="{{ $client->id }}" />
 
             <div class="flex flex-wrap flex-lg-columns justify-around">

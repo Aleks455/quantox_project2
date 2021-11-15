@@ -17,18 +17,17 @@ class UserController extends Controller
 {
     public function index()
     {
-    //    dd(auth()->user());
         return view('user.profile', [
             'user' => auth()->user()
         ]);
     }
 
-    public function edit ()
+    public function edit()
     {
         return view('user.update', ['user' => auth()->user()]);
     }
 
-    public function update (Request $request)
+    public function update(Request $request)
     {
 
         //treba validacija

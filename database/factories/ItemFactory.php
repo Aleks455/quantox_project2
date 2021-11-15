@@ -33,7 +33,7 @@ class ItemFactory extends Factory
             'name' => $this->faker->randomElement(['Web Designe','Database update','Plug-in update']),
             'price' => $price,
             'quantity' => $quantity,
-            'total' => $total
+            'total' => $total,
         ];
     }
 }

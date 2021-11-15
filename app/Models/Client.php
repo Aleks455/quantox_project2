@@ -22,7 +22,7 @@ class Client extends Model
         'address',
         'city',
         'postal_code',
-        'country'
+        'country',
     ];
     
     public function user()

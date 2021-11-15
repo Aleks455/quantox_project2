@@ -16,7 +16,7 @@ class Invoice extends Model
         'client_id',
         'grand_total',
         'date',
-        'due_date'
+        'due_date',
     ];
     
     public function user()
@@ -31,7 +31,7 @@ class Invoice extends Model
 
     public function items()
     {
-        return $this->hasMany(Items::class);
+        return $this->hasMany(Item::class);
     }
 }
 

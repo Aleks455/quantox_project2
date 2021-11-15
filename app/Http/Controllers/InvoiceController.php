@@ -4,28 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use App\Models\User;
+use App\Models\Client;
+use App\Models\Item;
 
+use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
     public function index()
     {
         return view('invoices.show', [         
-            'invoices' => auth()->user()->invoices()->paginate(10),
+            'invoices' => auth()->user()->invoices()->paginate(10)
+            
         ]);
     }
 
     public function create()
     {
         return view('invoices.create', [
-            'clients' => auth()->user()->clients
+            'user' => auth()->user(),
+            'invoices' => auth()->user()->invoices,
+            'clients' => auth()->user()->clients,
         ]);
     }
 
     public function store(Request $request)
     {
-
-        dd($request);
         $this->validate($request,[
             'user_id' => 'required',
             'client_id' => 'required',   
@@ -47,13 +53,14 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index');
     }
 
-    public function show (Invoice $invoice)
-    {
+    public function show(Invoice $invoice)
+    {   
         return view ('invoices.show-one', ['invoice' => $invoice]);
     }
 
-    public function edit (Invoice $invoice)
+    public function edit(Invoice $invoice)
     {
+        $this->invoice = $invoice;
         return view('invoices.edit', ['invoice' => $invoice]);
     }
 
@@ -81,9 +88,31 @@ class InvoiceController extends Controller
     // }
 
 
-    public function destroy (Invoice $invoice)
+    public function destroy(Invoice $invoice)
     {
         $invoice->delete();
-        return redirect()->route('invoices.index');
+        return redirect()->route('invoices.index')->with('success','Product deleted successfully');
     }
+
+    public function pdfView(Request $request, $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        view()->share('invoice', $invoice);
+        
+        if ($request->has('download')) {
+            PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+            $pdf = PDF::loadView('invoices.show-one', $invoice);
+            return $pdf->download('invoices.show-one.pdf');
+            // return $pdf->stream('invoices.show-one.pdf');
+        }
+        return view('invoices.show-one');
+    }
+
+    public function curentDate()
+    {
+        return Carbon::now();
+    }
+
+   
+
 }

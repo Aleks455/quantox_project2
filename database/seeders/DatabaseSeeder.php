@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
                 ]);
                 
                 $items = Item::factory(5)->create([
-                    'invoice_no' => $invoices->id
+                    'invoice_id' => $invoices->id
                 ]);
                 
                 $grand_total = $items->sum('total');
@@ -43,7 +43,6 @@ class DatabaseSeeder extends Seeder
                 $invoices->grand_total = $grand_total;
                 $invoices->save();
             }
-           
         }
        
        

@@ -40,8 +40,7 @@ class UserFactory extends Factory
             'state'=> $this->faker->country(),
             'postal_code'=> $this->faker->numberBetween(10000,99999),
             'phone_number'=> $this->faker->randomNumber(),
-            'bank_account' => $this->faker->randomNumber()
-
+            'bank_account' => $this->faker->randomNumber(),
         ];
     }
 
