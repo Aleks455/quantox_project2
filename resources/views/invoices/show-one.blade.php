@@ -65,8 +65,8 @@
         </div>
 
         {{-- Header --}}
-        <div class=" ">
-            <div><a class="border" href="{{ route('generate_pdf', ['download' => 'pdf', 'invoice' => $invoice->id] )}}"> Export PDF</a></div>
+        <div class="mt-3">
+            <div><a class="border p-3 rounded" href="{{ route('generate_pdf', ['download' => 'pdf', 'invoice' => $invoice->id] )}}"> Export PDF</a></div>
         </div>
 
         <table class="table mt-5">
@@ -161,8 +161,8 @@
                 <tr>
                     <td class="pl-0">{{ $item->name }}</td>
                     <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right">{{ $item->price }}</td>
-                    <td class="text-right pr-0">{{ $item->total }}</td>
+                    <td class="text-right">${{ $item->price }}</td>
+                    <td class="text-right pr-0">${{ $item->total }}</td>
                 </tr>
                 @endforeach
                 {{-- Summary --}}
@@ -170,7 +170,7 @@
                         <td colspan="2" class="border-0"></td>
                         <td class="text-right pl-0">Grand total</td>
                         <td class="text-right pr-0 total-amount">
-                            {{ $invoice->grand_total }}
+                            ${{ $invoice->grand_total }}
                         </td>
                     </tr> 
             </tbody>

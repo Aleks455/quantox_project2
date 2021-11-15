@@ -25,6 +25,9 @@
                         <x-list.button color="gray"> 
                             <a href="{{ route('invoices.show', $invoice->id) }}" class="">View</a>
                         </x-list.button>
+                        <x-list.button color="green"> 
+                            <a href="{{ route('generate_pdf', ['download' => 'pdf', 'invoice' => $invoice->id]) }}" class="">Download</a>
+                        </x-list.button>
                         <x-list.button color="blue"> 
                             <a href="{{ route('invoices.edit',  $invoice->id) }}" class="">Edit</a>
                         </x-list.button>

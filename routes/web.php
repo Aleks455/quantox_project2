@@ -69,4 +69,4 @@ Route::get('/invoices/edit/{invoice:id}', [InvoiceController::class, 'edit'])->n
 Route::post('/invoices/update', [InvoiceController::class, 'update'])->name('invoices.update')->middleware('auth');
 Route::get('/invoices/delete/{invoice:id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy')->middleware('auth');
 
-Route::get('/invoices/generate_pdf/{invoice}', [InvoiceController::class, 'pdfView'])->name('generate_pdf')->middleware('auth');
+Route::get('/invoices/generate_pdf/{invoice}', [InvoiceController::class, 'pdfExport'])->name('generate_pdf')->middleware('auth');

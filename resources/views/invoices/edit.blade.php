@@ -17,7 +17,6 @@
             <x-invoice_form.form_content />
             <hr>  
 
-           
             <x-form.button> Update </x-form.button>
         </form>
     </x-body>

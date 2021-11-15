@@ -94,15 +94,15 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index')->with('success','Product deleted successfully');
     }
 
-    public function pdfView(Request $request, $id)
+    public function pdfExport(Request $request, $id)
     {
         $invoice = Invoice::findOrFail($id);
         view()->share('invoice', $invoice);
         
         if ($request->has('download')) {
             PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-            $pdf = PDF::loadView('invoices.show-one', $invoice);
-            return $pdf->download('invoices.show-one.pdf');
+            $pdf = PDF::loadView('invoices.pdf', $invoice);
+            return $pdf->download('invoice.pdf');
             // return $pdf->stream('invoices.show-one.pdf');
         }
         return view('invoices.show-one');
