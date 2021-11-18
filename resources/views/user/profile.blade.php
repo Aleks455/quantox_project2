@@ -19,7 +19,7 @@
             <x-list.item label='Company Address'>{{ $user->company_address ? $user->company_address  : '/'}}</x-list.item>
             <x-list.item label='Phone number'>{{ $user->phone_number ? $user->phone_number  : '/'}}</x-list.item>
             <x-list.item label='City'>{{ $user->city ? $user->city  : '/' }}</x-list.item>
-            <x-list.item label='Post code'>{{ $user->postal_code ?$user->postal_code : '/' }}</x-list.item>
+            <x-list.item label='Post code'>{{ $user->postal_code ? $user->postal_code : '/' }}</x-list.item>
             <x-list.item label='Country'>{{ $user->state ? $user->state  : '/'}}</x-list.item>
         </div>
     </x-body>

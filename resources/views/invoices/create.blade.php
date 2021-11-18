@@ -1,231 +1,156 @@
 <x-layout>
-    <style type="text/css" media="screen">
-           
-        body {
-            color: #212529; */
-            text-align: left;    
-        }
-       
-        p {
-            margin-bottom: 1rem;
-        }
-       
-        .table {
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-        .table th,
-        .table td {
-            padding: 0.75rem;
-        }
-        .table.table-items td {
-            border-top: 1px solid #dee2e6;
-        }
-       
-        .mt-5 {
-            margin-top: 3rem !important;
-        }
-        .pr-0,
-        .px-0 {
-            padding-right: 0 !important;
-        }
-        .pl-0,
-        .px-0 {
-            padding-left: 0 !important;
-            text-align: left;
-        }
-      
-        * {
-            font-family: "DejaVu Sans";
-        }
-        body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
-            line-height: 1.1;
-        }
-        .party-header {
-            font-size: 1.5rem;
-            font-weight: 400;
-        }
-        .total-amount {
-            font-weight: 700;
-        }
-        .border-0 {
-            border: none !important;
-        }
-        
-    </style>
-
     <x-body>
         <div class=" border-b-2 flex flex-auto">
             <x-list.button>
-                <a href="{{ route('invoices.index') }}" class="">Back</a>
+                <a href = "{{ route('invoices.index') }}" class ="">Back</a>
             </x-list.button>
         </div>
 
         <x-list.heading>New Invoice</x-list.heading>
 
-        {{-- Invoice form  --}}
-
-        <form action="{{ route('invoices.store') }}" method="POST">
+        <form action="{{ route('invoices.create') }}" method="POST">
             @csrf
                         
-            <div class="flex flex-wrap  justify-between">
-               
-                <div class="user">
-                    <p>{{ $user->first_name}} {{ $user->last_name }}</p>
-                    <p>{{ $user->company_name }}</p>
-                    <p>{{ $user->company_number }}</p>
-                    <p>{{ $user->first_name }}</p>
-
-                </div>
-
-                <div class="client">
-                    {{-- search box --}}
-                    <select name="invoice" id="invoice">
-                        @if ($clients->count())
-                            @foreach ($clients as $client)
-                                <option>{{ $client->name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <option>{{ $client->name }}</option>
-                </div>
-            </div>
-            <hr>
-            <br>
-            <hr> 
-
-            <x-body>
-                <div class=" border-b-2 flex flex-auto justify-between">
-                    <x-list.button>
-                        <a href="{{ route('invoices.index') }}" class="">Back</a>
-                    </x-list.button>
-                    <x-list.button>
-                        <a href="{{ route('invoices.edit', $invoice->id) }}" class="">Edit</a>
-                    </x-list.button>
-                </div>
-        
-                {{-- Header --}}
-                <div class=" ">
-                    <div><a class="border" href="{{ route('generate_pdf', ['download' => 'pdf', 'invoice' => $invoice->id] )}}"> Export PDF</a></div>
-                </div>
-        
-                <table class="table mt-5">
-                    <tbody>
-                        <tr>
-                            <td class="border-0 pl-0" width="70%">
-                                
-                            </td>
-                            <td class="border-0 pl-0">
-                                {{-- @if($invoice->status)
-                                    <h4 class="text-uppercase cool-gray">
-                                        {{-- <strong>{{ $invoice->status }}</strong> --}}
-                                    </h4>
-                                @endif --}}
-                                <p><strong>Invoice no: <x-invoices.input /> / 2021</strong></p>
-                                <p> <strong>Invoice date:<x-invoices.input /></strong></p>
-                                <p> <strong>Invoice due date:<x-invoices.input /></strong></p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-        
-                {{-- From - To --}}
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="border-0 pl-0 party-header" width="48.5%">
-                                From
-                            </th>
-                            <th class="border-0" width="3%"></th>
-                            <th class="border-0 pl-0 party-header">
-                                To
-        
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="px-0">
-                                @if ($invoice->user->company_name ) 
-                                    <p>Company: <strong>{{ $invoice->user->company_name }}</strong>
-                                    </p>
-                                @endif
-        
-                                @if ($invoice->user->company_address)
-                                    <p>Address: {{ $invoice->user->company_address }}</p>
-                                @endif
-        
-                                @if($invoice->user->vat_id)
-                                    <p>Vat ID: {{ $invoice->user->vat_id }}</p>
-                                @endif
-        
-                                @if($invoice->user->phone_number)
-                                    <p>Phone: {{ $invoice->user->phone_number }}</p>
-                                @endif
-                            </td>
-                            <td class="border-0"></td>
-                            <td class="px-0">
-                                @if($invoice->client->name)
-                                    <p>Client: <strong>{{ $invoice->client->name }}</strong></p>
-                                @endif
-        
-                                @if($invoice->client->address)
-                                    <p>Address: {{ $invoice->client->address }}</p>
-                                @endif
-        
-                                @if($invoice->client->vat_id)
-                                    <p>VAT ID: {{ $invoice->client->vat_id }}</p>
-                                @endif
-        
-                                @if($invoice->client->phone_number)
-                                    <p>Phone: {{ $invoice->client->phone_number }}</p>
-                                @endif
-                            </td>
-                        </tr>
-                    </tbody> 
-                </table>
-        
-                {{-- Table --}}
-                <table class="table table-items">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="border-0 pl-0">Service</th>
-                            <th scope="col" class="text-center border-0">Quantity</th>
-                            <th scope="col" class="text-right border-0">Price</th>                 
-                            <th scope="col" class="text-right border-0 pr-0">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{-- Items --}}
-                        @foreach($invoice->items as $item)
-                        <tr>
-                            <td class="pl-0">{{ $item->name }}</td>
-                            <td class="text-center">{{ $item->quantity }}</td>
-                            <td class="text-right">{{ $item->price }}</td>
-                            <td class="text-right pr-0">{{ $item->total }}</td>
-                        </tr>
+                {{-- <form action="{{ route('invoices.index') }}" method="GET">
+                    <select name="client" id="client">
+                        @foreach ($clients as $client)
+                            <option value="">{{ $client->name }}</option>
                         @endforeach
-                        {{-- Summary --}}
+                        <input type="text"  value="{{ $client->id }}">
+                    </select>
+                    <button type="submit" name="search_clients" id="search_clients">Choose client</button>
+                </form> --}}
+             
+                <div class="invoice_table table_create mb-12">
+                    <table class="table mt-5">
+                        <tbody>
                             <tr>
-                                <td colspan="2" class="border-0"></td>
+                                <td class="border-0 pl-0" width="70%">
+                                
+                                </td>
+                                <td class="border-0 pl-0">
+                                    {{-- @if($invoice->status) --}}
+                                        <h4 class="text-uppercase cool-gray">
+                                            {{-- <strong>{{ $invoice->status }}</strong> --}}
+                                        </h4>
+                                    {{-- @endif --}}
+                                    <p> <strong>Invoice date: </strong> {{ $currentDate }}</p>
+                                    <p> <strong>Invoice due date: <input type="date"></strong></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+                    {{-- From - To --}}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="border-0 pl-0 party-header" width="48.5%">
+                                    From
+                                </th>
+                                <th class="border-0" width="3%"></th>
+                                <th class="border-0 pl-0 party-header">
+                                    To
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-0">
+                                    @if ($user->company_name ) 
+                                        <p>Company: <strong>{{ $user->company_name }}</strong>
+                                        </p>
+                                    @else
+                                    <p class="text-red-500">
+                                    Please fill out company name: <a href="{{ route('user') }}">Profile</a>
+                                    </p>
+                                    @endif
+            
+                                    @if ($user->company_address)
+                                        <p>Address: {{ $user->company_address }}</p>
+                                    @else
+                                    <p class="text-red-500">
+                                    Please fill out company address: <a href="{{ route('user') }}">Profile</a>
+                                    </p>    
+                                    @endif
+            
+                                    @if($user->vat_id)
+                                        <p>Vat ID: {{ $user->vat_id }}</p>
+                                    @else
+                                    <p class="text-red-500">
+                                    Please fill out VAT ID: <a href="{{ route('user') }}">Profile</a>
+                                    </p>
+                                    @endif
+            
+                                    @if($user->phone_number)
+                                        <p>Phone: {{ $user->phone_number }}</p>
+                                    @else
+                                    <p class="text-red-500">
+                                    Please fill out phone number: <a href="{{ route('user') }}">Profile</a>
+                                    </p>
+                                    @endif
+                                </td>
+                                <td class="border-0"></td>
+                                <td class="px-0">
+                                    @if($client->id)
+                                        <p>Client: <strong>{{ $client->name }}</strong></p>
+                                        <p>Address: {{ $client->address }}</p>
+                                        <p>VAT ID: {{ $client->vat_id }}</p>
+                                        <p>Phone: {{ $client->phone_number }}</p>
+                                    @else
+                                    <p class="text-red-500">
+                                    Please add client: <a href="{{ route('clients.create') }}">New Client</a>
+                                    </p>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+            
+                    {{-- Table --}}
+                    <table class="table table-items">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="border-0 pl-0"></th>
+                                <th scope="col" class="border-0 pl-0">Service</th>
+                                <th scope="col" class="text-center border-0">Quantity</th>
+                                <th scope="col" class="text-right border-0">Price</th>                 
+                                <th scope="col" class="text-right border-0 pr-0">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{-- Items --}}
+                            <tr name="line_items">
+                                <td><button name="remove" class="border btn-sm p-2 rounded">Remove</button></td>
+                                <td class="pl-0"><input type="text" name="item"></td>
+                                <td class="text-center"><input type="text" name="qty" value="3"></td>
+                                <td class="text-right"><input type="text" name="price" value="120"></td>
+                                <td class="text-right pr-0 "><input type="text" name="item_total" jAutoCalc="{qty} * {price}"></td>
+                            </tr>
+                            {{-- Summary --}}
+                            <tr>
+                                <td colspan="3" class="border-0"></td>
                                 <td class="text-right pl-0">Grand total</td>
                                 <td class="text-right pr-0 total-amount">
-                                    {{ $invoice->grand_total }}
+                                   <input type="text" name="grand_total" jAutoCalc="SUM({item_total})">
                                 </td>
                             </tr> 
-                    </tbody>
-                </table>
-        
-                {{-- @if($invoice->notes)
-                    <p>
-                        Note: {!! $invoice->notes !!}
-                    </p>
-                @endif --}}
-        
-                <p>Total amount is: ${{ $invoice->grand_total }}</p>
-                <p>Please pay until: {{ $invoice->due_date }}</p>
-
-            <x-form.button> Create </x-form.button>          
+                        </tbody>
+                    </table>
+                    <div class="mt-3">
+                        <div><button class="border p-2 rounded" type="button" name="add" id="add" class="btn btn-primary">Add Row</button></div>
+                    </div>
+            
+                    {{-- @if($invoice->notes)
+                        <p>
+                            Note: {!! $invoice->notes !!}
+                        </p>
+                    @endif --}}
+                </div>
+            <x-form.button> Save </x-form.button>
         </form>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jautocalc.js"></script>
+        <script src="js/script.js"></script>
     </x-body>
 </x-layout>

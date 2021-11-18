@@ -24,7 +24,6 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            // 'user_id'=> $user_id,
             'name' => $this->faker->company(),
             'company_number' => $this->faker->ean8(),
             'vat_id' => $this->faker->ean8(),

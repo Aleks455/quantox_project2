@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -14,9 +12,8 @@ class ClientController extends Controller
     //
     public function index()
     {
-        return view('clients.show', [         
+        return view('clients.index', [         
             'clients' => auth()->user()->clients()->paginate(10),
-            //paginate
         ]);
     }
 
@@ -58,7 +55,7 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-        return view('clients.show-one', ['client' => $client]);
+        return view('clients.show', ['client' => $client]);
     }
 
     public function edit(Client $client)

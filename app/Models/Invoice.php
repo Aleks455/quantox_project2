@@ -19,6 +19,19 @@ class Invoice extends Model
         'due_date',
     ];
     
+    protected $guarded = [];
+
+    protected $with = ['user', 'client'];
+
+    public function scopeFilter($query)
+    {
+        if (request('search')) {
+            $query
+            ->where('client_name', 'like', '%' . request('search') . '%')
+            ->orWhere ('status', 'like', '$' . request('search') . '%');
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

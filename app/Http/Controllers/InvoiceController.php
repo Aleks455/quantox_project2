@@ -15,47 +15,56 @@ class InvoiceController extends Controller
 {
     public function index()
     {
-        return view('invoices.show', [         
-            'invoices' => auth()->user()->invoices()->paginate(10)
-            
+        // return view('invoices.show', [         
+        //     'invoices' => auth()->user()->invoices()->paginate(10)
+        // ]);
+        return view('invoices.index', [         
+            'invoices' => auth()->user()->invoices()->latest()->filter(
+                request(['search', 'client', 'date', 'due_date'])
+            )->paginate(10)->withQueryString()
         ]);
+    //    return view('invoices.index', [  
+    //     'invoices' => Invoice::latest()->with('user','client')->get()
+    //     ]);
+    }
+
+    public function show(Invoice $invoice)
+    {   
+        return view ('invoices.show', ['invoice' => $invoice]);
     }
 
     public function create()
     {
+        // dd(auth()->user()->invoices());
+
         return view('invoices.create', [
             'user' => auth()->user(),
-            'invoices' => auth()->user()->invoices,
-            'clients' => auth()->user()->clients,
+            'client' => auth()->user()->clients()->first(), 
+            'currentDate' => $this->currentDate(),
+            // dodati sve klijente kad napravim u opciju za odabir/, ipreko usera da ih izabiram
         ]);
     }
 
     public function store(Request $request)
     {
         $this->validate($request,[
-            'user_id' => 'required',
             'client_id' => 'required',   
             'grand_total' => 'required',
-            'date' => 'required',
             'due_date' => 'required'
         ]);
+        $request['due_date'] = Carbon::createFromFormat('m/d/Y', $request->due_date)->format('Y-m-d');
 
         auth()->user()->invoices()->create([
-            'user_id' => $request->user_id,
+            // 'user_id' => auth()->user()->id,
             'client_id' => $request->client_id,
             'grand_total' => $request->grand_total,
-            'date' => $request->date,
+            'date' => Carbon::now()->format('Y-m-d'),
             'due_date' => $request->due_date,
             'remember_token' =>request()->_token,
             
         ]);
 
         return redirect()->route('invoices.index');
-    }
-
-    public function show(Invoice $invoice)
-    {   
-        return view ('invoices.show-one', ['invoice' => $invoice]);
     }
 
     public function edit(Invoice $invoice)
@@ -68,7 +77,7 @@ class InvoiceController extends Controller
     // {
 
     //     $this->validate($request,[
-            
+            // validate all, but save only client id
     //     ]);
 
     //     $data = Invoice::find($request->id);
@@ -103,16 +112,16 @@ class InvoiceController extends Controller
             PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
             $pdf = PDF::loadView('invoices.pdf', $invoice);
             return $pdf->download('invoice.pdf');
-            // return $pdf->stream('invoices.show-one.pdf');
         }
         return view('invoices.show-one');
     }
 
-    public function curentDate()
+    public function currentDate()
     {
-        return Carbon::now();
+        return Carbon::now()->format('m/d/Y');
     }
 
-   
+
+    
 
 }

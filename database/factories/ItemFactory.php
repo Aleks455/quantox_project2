@@ -29,7 +29,6 @@ class ItemFactory extends Factory
         $total = $price * $quantity;
 
         return [
-            // 'invoice_no' => $invoice_id, 
             'name' => $this->faker->randomElement(['Web Designe','Database update','Plug-in update']),
             'price' => $price,
             'quantity' => $quantity,

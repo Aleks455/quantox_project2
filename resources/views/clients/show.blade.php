@@ -1,42 +1,25 @@
 <x-layout>
     <x-body>
-        <div class=" border-b-2 flex flex-auto justify-end">
+        <div class=" border-b-2 flex flex-auto justify-between">
             <x-list.button>
-                <a href="{{ route('clients.create') }}" class=""> + Create New Client</a>
+                <a href="{{ route('clients') }}" class="">Back</a>
+            </x-list.button>
+            <x-list.button>
+                <a href="{{ route('client.edit', $client->name) }}" class="">Edit</a>
             </x-list.button>
         </div>
 
-        <x-list.heading>Clients List</x-list.heading>
-
-        @if ($clients->count()) 
-            @foreach ($clients as $client)
-                <x-list.field>
-                    <x-list.item value='overflow-hidden' label='Name'>{{ $client->name }} </x-list.item>
-                    <x-list.item value='overflow-hidden' label='Vat ID'>{{ $client->vat_id }} </x-list.item>
-                    <x-list.item value='overflow-hidden' label='Address'>{{ $client->address }} </x-list.item>
-                    <x-list.item value='overflow-hidden' label='City'>{{ $client->city }} </x-list.item>
-                    
-                    <div class="flex-wrap  justify-around text-sm">
-                        <x-list.button color="gray"> 
-                            <a href="{{ route('client.show', $client->name) }}" class="">Show</a>
-                        </x-list.button>
-                        <x-list.button color="blue"> 
-                            <a href="{{ route('client.edit',  $client->name) }}" class="">Edit</a>
-                        </x-list.button>
-                        <form action="{{ route('client.destroy', $client->name) }}" class="inline">
-                            @csrf
-                            <x-list.button color="red"> 
-                                Delete
-                            </x-list.button>
-                        </form>
-                    </div>
-                </x-list.field>     
-            @endforeach
-        @else
-            <div class="italic text-center">The list is empty, please add clients</div>
-        @endif 
-        <div class="pt-5">                                     
-            {{ $clients->links() }}
+        <div>
+            <x-list.item label='Name'>{{ $client->name }}</x-list.item>
+            <x-list.item label='Vat ID'>{{ $client->vat_id }} </x-list.item>
+            <x-list.item label='Company number'>{{ $client->company_number }}</x-list.item>
+            <x-list.item label='Bank account'>{{ $client->bank_account }}</x-list.item>
+            <x-list.item label='Phone number'>{{ $client->phone_number }}</x-list.item>
+            <x-list.item label='Email'>{{ $client->email }}</x-list.item>
+            <x-list.item label='Address'>{{ $client->address }}</x-list.item>
+            <x-list.item label='City'>{{ $client->city }}</x-list.item>
+            <x-list.item label='Post code'>{{ $client->postal_code }}</x-list.item>
+            <x-list.item label='Country'>{{ $client->country }}</x-list.item>
         </div>
     </x-body>
 </x-layout>

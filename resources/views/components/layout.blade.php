@@ -17,7 +17,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
 
     </head>
-    <body class="bg-gray-200 text-sm text-gray-800 tracking-wider font-weight-500">
+    <body class="bg-gray-200 text-sm text-gray-800 tracking-wider font-weight-500 mb-10">
         <header>
             <nav class="p-6 bg-white flex justify-between mb-7 hover-text-gray-700">
                 @auth

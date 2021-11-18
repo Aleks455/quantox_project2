@@ -11,11 +11,10 @@
         <form action="{{ route('invoices.update') }}" method="POST">
             @csrf
             
-            
             <x-form.input name="id" placeholder="" type="hidden" label="" value="{{ $invoice->id }}" />
 
-            <x-invoice_form.form_content />
-            <hr>  
+            
+           
 
             <x-form.button> Update </x-form.button>
         </form>
