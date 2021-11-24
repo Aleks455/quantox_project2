@@ -10,11 +10,16 @@
         <title>Invoice application</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+        <script defer src="https://unpkg.com/alpinejs@3.5.0/dist/cdn.min.js"></script>
+
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-	    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jautocalc@1.3.1/dist/jautocalc.js"></script>
-        <script src="{{ asset('js/autocalc.js') }}"></script>
+	    {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jautocalc@1.3.1/dist/jautocalc.js"></script> --}}
+        {{-- <script src="{{ asset('js/autocalc.js') }}"></script> --}}
         
         <script src="{{ asset('js/app.js') }}"></script>
+        
+        {{-- <script src="https://unpkg.com/vue@next"></script> --}}
+
 
     </head>
     <body class="bg-gray-200 text-sm text-gray-800 tracking-wider font-weight-500 mb-10">

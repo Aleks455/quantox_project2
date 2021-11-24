@@ -4,28 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-use App\Models\User;
-use App\Models\Client;
-use App\Models\Item;
 
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
+
     public function index()
     {
-        // return view('invoices.show', [         
-        //     'invoices' => auth()->user()->invoices()->paginate(10)
-        // ]);
+        $invoices = auth()->user()->invoices()
+            ->join('clients', 'invoices.client_id', '=', 'clients.id')
+            ->where('clients.name', 'like', '%' . request('search') . '%')
+            ->orWhere('due_date', 'like', '%' . request('search') . '%');
+            
         return view('invoices.index', [         
-            'invoices' => auth()->user()->invoices()->latest()->filter(
-                request(['search', 'client', 'date', 'due_date'])
-            )->paginate(10)->withQueryString()
+            'invoices' => $invoices->paginate(10)
         ]);
-    //    return view('invoices.index', [  
-    //     'invoices' => Invoice::latest()->with('user','client')->get()
-    //     ]);
+
+        // return view('invoices.index', [         
+        //     'invoices' =>auth()->user()->invoices()->latest()
+        //     ->filter(
+        //         request(['search'])
+        //     )->paginate(10)->withQueryString()
+        // ]);
+    
     }
 
     public function show(Invoice $invoice)
@@ -35,27 +38,30 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        // dd(auth()->user()->invoices());
-
         return view('invoices.create', [
             'user' => auth()->user(),
-            'client' => auth()->user()->clients()->first(), 
-            'currentDate' => $this->currentDate(),
-            // dodati sve klijente kad napravim u opciju za odabir/, ipreko usera da ih izabiram
+            'clients' => auth()->user()->clients, 
+            // 'currentDate' => $this->currentDate(),
         ]);
     }
 
     public function store(Request $request)
     {
+        dd($request);
+
         $this->validate($request,[
             'client_id' => 'required',   
             'grand_total' => 'required',
-            'due_date' => 'required'
+            'date' => 'required',
+            'due_date' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'total' => 'required',
         ]);
-        $request['due_date'] = Carbon::createFromFormat('m/d/Y', $request->due_date)->format('Y-m-d');
+        // $request['due_date'] = Carbon::createFromFormat('m/d/Y', $request->due_date)->format('Y-m-d');
 
         auth()->user()->invoices()->create([
-            // 'user_id' => auth()->user()->id,
+            'user_id' => auth()->user()->id,
             'client_id' => $request->client_id,
             'grand_total' => $request->grand_total,
             'date' => Carbon::now()->format('Y-m-d'),
@@ -116,10 +122,32 @@ class InvoiceController extends Controller
         return view('invoices.show-one');
     }
 
-    public function currentDate()
+    // public function formateDate($date)
+    // {
+    //     return Carbon::now()->format('m/d/Y');
+    // }
+
+    // public function sendMail($email)
+    // {
+    //     // $details = [
+    //     //     'title' => 'mail from Aleksandra',
+    //     //     'body' => 'This is for testing email using smtp',
+    //     // ];
+
+    //     // \Mail::to($email)->send(new \App\Mail\myMail($details));
+
+    //     // dd("Email is Sent.");
+        
+    // }
+
+    public function addClient($client_id)
     {
-        return Carbon::now()->format('m/d/Y');
+        return auth()->user()->clients()->finOrFail($client_id);
     }
+
+   
+
+
 
 
     

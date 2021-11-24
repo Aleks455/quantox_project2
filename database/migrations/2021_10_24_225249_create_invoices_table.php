@@ -20,6 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->integer('grand_total')->nullable();
             $table->string('date');
             $table->string('due_date');
+            $table->string('status')->default('draft');
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class Invoice extends Model
         'grand_total',
         'date',
         'due_date',
+        'status',
     ];
     
     protected $guarded = [];
@@ -27,8 +28,8 @@ class Invoice extends Model
     {
         if (request('search')) {
             $query
-            ->where('client_name', 'like', '%' . request('search') . '%')
-            ->orWhere ('status', 'like', '$' . request('search') . '%');
+            ->where('due_date', 'like', '%' . request('search') . '%')
+            ->orWhere('clients.name', 'like', '%' . request('search') . '%');
         }
     }
 

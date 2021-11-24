@@ -21,14 +21,8 @@ class Item extends Model
         'total',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function invoices()
+    public function invoice()
     {
         return $this->belongsTo(Invoice::class);
     }
-
 }

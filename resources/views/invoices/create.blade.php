@@ -7,20 +7,9 @@
         </div>
 
         <x-list.heading>New Invoice</x-list.heading>
-
-        <form action="{{ route('invoices.create') }}" method="POST">
-            @csrf
-                        
-                {{-- <form action="{{ route('invoices.index') }}" method="GET">
-                    <select name="client" id="client">
-                        @foreach ($clients as $client)
-                            <option value="">{{ $client->name }}</option>
-                        @endforeach
-                        <input type="text"  value="{{ $client->id }}">
-                    </select>
-                    <button type="submit" name="search_clients" id="search_clients">Choose client</button>
-                </form> --}}
-             
+        
+        <form action="{{ route('invoices.store') }}" method="POST">
+            @csrf             
                 <div class="invoice_table table_create mb-12">
                     <table class="table mt-5">
                         <tbody>
@@ -34,8 +23,14 @@
                                             {{-- <strong>{{ $invoice->status }}</strong> --}}
                                         </h4>
                                     {{-- @endif --}}
-                                    <p> <strong>Invoice date: </strong> {{ $currentDate }}</p>
-                                    <p> <strong>Invoice due date: <input type="date"></strong></p>
+                                    <p> <strong>Invoice date: </strong> 
+                                        <input type="date" value="{{ old('date') ? old('date') : date('Y-m-d') }}">
+                                        {{-- format the date --}}
+                                    </p>
+                                    <p> <strong>Invoice due date: </strong>
+                                        <input type="date" value="{{ old('due_date') ? old('due_date') : date('Y-m-d', time() + (60 * 60 * 24 * 14))  }}">
+                                       
+                                    </p>
                                 </td>
                             </tr>
                         </tbody>
@@ -49,10 +44,19 @@
                                     From
                                 </th>
                                 <th class="border-0" width="3%"></th>
+                                <div class="float-right">
+                                    <label for="get_client" class="font-bold">Search for client: </label>
+                                    <select onclick="clientID()" name="get_client_id" id="get_client_id" class="">
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <th class="border-0 pl-0 party-header">
-                                    To
+                                    To   
                                 </th>
                             </tr>
+                           
                         </thead>
                         <tbody>
                             <tr>
@@ -92,8 +96,8 @@
                                 </td>
                                 <td class="border-0"></td>
                                 <td class="px-0">
-                                    @if($client->id)
-                                        <p>Client: <strong>{{ $client->name }}</strong></p>
+                                    @if($client->id?? '')
+                                        <p>Client: <strong>{{$name = $client->name }}</strong></p>
                                         <p>Address: {{ $client->address }}</p>
                                         <p>VAT ID: {{ $client->vat_id }}</p>
                                         <p>Phone: {{ $client->phone_number }}</p>
@@ -149,8 +153,16 @@
                 </div>
             <x-form.button> Save </x-form.button>
         </form>
-        <script src="js/jquery.min.js"></script>
+        {{-- <script src="js/jquery.min.js"></script>
         <script src="js/jautocalc.js"></script>
-        <script src="js/script.js"></script>
+        <script src="js/script.js"></script> --}}
+        <script>
+        var clients;
+            function clientId() {
+                var client_id = document.getElementById('get_client_id').value;
+                console.log(client_id);
+            }
+            // clientId();
+        </script>        
     </x-body>
 </x-layout>

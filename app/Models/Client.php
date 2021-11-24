@@ -30,7 +30,7 @@ class Client extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function invoice()
+    public function invoices()
     {
         return $this->hasMany(Invoice::class);
     }

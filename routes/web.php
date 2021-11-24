@@ -70,3 +70,7 @@ Route::post('/invoices/update', [InvoiceController::class, 'update'])->name('inv
 Route::get('/invoices/delete/{invoice:id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy')->middleware('auth');
 
 Route::get('/invoices/generate_pdf/{invoice}', [InvoiceController::class, 'pdfExport'])->name('generate_pdf')->middleware('auth');
+Route::get('/invoices/send_mail/{client:email}', [InvoiceController::class, 'sendMail'])->name('sendMail')->middleware('auth');
+
+// Route::get('/invoices/add_client/{client:id}', [InvoiceController::class, 'addClient'])->name('add_client')->middleware('auth');
+
