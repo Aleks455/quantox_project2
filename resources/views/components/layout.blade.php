@@ -16,7 +16,9 @@
 	    {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jautocalc@1.3.1/dist/jautocalc.js"></script> --}}
         {{-- <script src="{{ asset('js/autocalc.js') }}"></script> --}}
         
-        <script src="{{ asset('js/app.js') }}"></script>
+        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+        <script src="{{ mix('/js/app.js') }}"></script>
+
         
         {{-- <script src="https://unpkg.com/vue@next"></script> --}}
 

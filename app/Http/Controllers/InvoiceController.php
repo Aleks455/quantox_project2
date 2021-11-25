@@ -13,22 +13,12 @@ class InvoiceController extends Controller
 
     public function index()
     {
-        $invoices = auth()->user()->invoices()
-            ->join('clients', 'invoices.client_id', '=', 'clients.id')
-            ->where('clients.name', 'like', '%' . request('search') . '%')
-            ->orWhere('due_date', 'like', '%' . request('search') . '%');
-            
         return view('invoices.index', [         
-            'invoices' => $invoices->paginate(10)
+            'invoices' =>auth()->user()->invoices()->latest()
+            ->filter(
+                request(['search'])
+            )->paginate(10)->withQueryString()
         ]);
-
-        // return view('invoices.index', [         
-        //     'invoices' =>auth()->user()->invoices()->latest()
-        //     ->filter(
-        //         request(['search'])
-        //     )->paginate(10)->withQueryString()
-        // ]);
-    
     }
 
     public function show(Invoice $invoice)

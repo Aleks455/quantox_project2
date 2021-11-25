@@ -27,9 +27,10 @@ class Invoice extends Model
     public function scopeFilter($query)
     {
         if (request('search')) {
+            $client_id = auth()->user()->clients()->select('id')->where('name', 'like', '%' . request('search') . '%')->pluck('id')->all();
             $query
             ->where('due_date', 'like', '%' . request('search') . '%')
-            ->orWhere('clients.name', 'like', '%' . request('search') . '%');
+            ->orWhere('client_id', '=', $client_id );
         }
     }
 
