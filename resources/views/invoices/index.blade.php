@@ -60,11 +60,12 @@
                     </div>
                 </x-list.field>     
             @endforeach
+            <div class="pt-5">                                     
+                {{ $invoices->links() }}
+            </div>
         @else
             <div class="italic text-center">There are no invoices, please create new</div>
         @endif 
-        <div class="pt-5">                                     
-            {{ $invoices->links() }}
-        </div>
+       
     </x-body>
 </x-layout>

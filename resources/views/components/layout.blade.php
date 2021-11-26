@@ -17,7 +17,7 @@
         {{-- <script src="{{ asset('js/autocalc.js') }}"></script> --}}
         
         {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
-        <script src="{{ mix('/js/app.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
 
         
         {{-- <script src="https://unpkg.com/vue@next"></script> --}}

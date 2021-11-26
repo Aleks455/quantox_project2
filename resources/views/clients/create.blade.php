@@ -8,7 +8,7 @@
 
         <x-list.heading>New Client</x-list.heading>
 
-        <form action="{{ route('clients.create') }}" method="POST">
+        <form action="{{ route('clients.store') }}" method="POST">
             @csrf
                         
             <div class="flex flex-wrap flex-lg-columns justify-around">

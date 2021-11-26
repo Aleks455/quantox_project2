@@ -55,7 +55,7 @@ Route::post('/user/update/{user:id}', [UserController::class, 'update'])->name('
 
 Route::get('/clients', [ClientController::class, 'index'])->name('clients')->middleware('auth');
 Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create')->middleware('auth');
-Route::post('/clients/store', [ClientController::class, 'store'])->middleware('auth');
+Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store')->middleware('auth');
 Route::get('/clients/show/{client:name}', [ClientController::class, 'show'])->name('client.show')->middleware('auth');
 Route::get('/clients/edit/{client:name}', [ClientController::class, 'edit'])->name('client.edit')->middleware('auth');
 Route::post('/clients/update', [ClientController::class, 'update'])->name('client.update')->middleware('auth');
@@ -72,5 +72,5 @@ Route::get('/invoices/delete/{invoice:id}', [InvoiceController::class, 'destroy'
 Route::get('/invoices/generate_pdf/{invoice}', [InvoiceController::class, 'pdfExport'])->name('generate_pdf')->middleware('auth');
 Route::get('/invoices/send_mail/{client:email}', [InvoiceController::class, 'sendMail'])->name('sendMail')->middleware('auth');
 
-// Route::get('/invoices/add_client/{client:id}', [InvoiceController::class, 'addClient'])->name('add_client')->middleware('auth');
+Route::get('/invoices/add_client/{client:id}', [InvoiceController::class, 'addClient'])->name('add_client')->middleware('auth');
 

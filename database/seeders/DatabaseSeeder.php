@@ -31,11 +31,12 @@ class DatabaseSeeder extends Seeder
             for($i = 0; $i < 3; $i++) {
                 $invoices = Invoice::factory()->create([
                     'user_id' => $user->id,
-                    'client_id' => $client->id
+                    'client_id' => $client->id,
+                    'status' => 'draft',
                 ]);
                 
                 $items = Item::factory(5)->create([
-                    'invoice_id' => $invoices->id
+                    'invoice_id' => $invoices->id,
                 ]);
                 
                 $grand_total = $items->sum('total');

@@ -1,7 +1,10 @@
 var app = new Vue({
-    el: '#invoce',
-    data: {
-        form: {},
-        errors: {}
-    }
+  el: '#invoice',
+  data: {
+    form: {},
+    errors: {}
+  },
+  created: function() {
+    Vue.set(this.$date, 'form', _form);
+  }
 })

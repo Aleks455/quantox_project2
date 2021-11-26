@@ -38,8 +38,8 @@ class UserFactory extends Factory
             'company_address'=> $this->faker->streetAddress(),
             'city' => $this->faker->city(),
             'state'=> $this->faker->country(),
-            'postal_code'=> $this->faker->numberBetween(10000,99999),
-            'phone_number'=> $this->faker->randomNumber(),
+            'postal_code'=> $this->faker->postcode(),
+            'phone_number'=> $this->faker->e164PhoneNumber(),
             'bank_account' => $this->faker->randomNumber(),
         ];
     }

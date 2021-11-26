@@ -13,7 +13,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('clients.index', [         
-            'clients' => auth()->user()->clients()->paginate(10),
+            'clients' => auth()->user()->clients()->latest()->paginate(10),
         ]);
     }
 

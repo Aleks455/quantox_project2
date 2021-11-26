@@ -7,17 +7,22 @@ use App\Models\Invoice;
 
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use FontLib\TrueType\Collection;
+use PhpParser\ErrorHandler\Collecting;
 
 class InvoiceController extends Controller
 {
-
     public function index()
     {
+
         return view('invoices.index', [         
-            'invoices' =>auth()->user()->invoices()->latest()
+            'invoices' => auth()->user()->invoices()
+            ->select('invoices.id', 'client_id', 'grand_total', 'date', 'due_date')
+            ->join('clients','invoices.client_id' , '=',  'clients.id')
             ->filter(
                 request(['search'])
-            )->paginate(10)->withQueryString()
+            )
+            ->paginate(10)->withQueryString()
         ]);
     }
 
@@ -31,7 +36,6 @@ class InvoiceController extends Controller
         return view('invoices.create', [
             'user' => auth()->user(),
             'clients' => auth()->user()->clients, 
-            // 'currentDate' => $this->currentDate(),
         ]);
     }
 
@@ -59,6 +63,8 @@ class InvoiceController extends Controller
             'remember_token' =>request()->_token,
             
         ]);
+        
+    
 
         return redirect()->route('invoices.index');
     }
