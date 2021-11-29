@@ -1,15 +1,3 @@
-var app = new Vue({
-  el: '#invoice',
-  data: {
-    form: {},
-    errors: {}
-  },
-  created: function() {
-    Vue.set(this.$date, 'form', _form);
-  }
-})
-
-
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2133,8 +2121,10 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  template: "Hello there"
 });
+app.mount('#invoice');
 
 /***/ }),
 

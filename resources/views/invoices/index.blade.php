@@ -66,6 +66,5 @@
         @else
             <div class="italic text-center">There are no invoices, please create new</div>
         @endif 
-       
     </x-body>
 </x-layout>

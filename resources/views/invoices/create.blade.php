@@ -1,11 +1,42 @@
 <x-layout>
     <x-body>
+        <script>
+            $(document).ready(function(){
+                $('#price, #qty').keyup(function(){
+                    var total = 0;
+                    var x = Number($("#price").val());
+                    var y = Number($("#qty").val());
+                    var total = x * y;
+                    $("#total").val(total);
+                });
+
+                $(".add-row").click(function(){
+                    var name = $("#name").val();
+                    var price = $("#price").val();
+                    var qty = $("#qty").val();
+                    var markup = "<tr><td class='table-remove'><span @click='remove(product)' class='table-remove-btn'>&times;</span></td><td class='table-name pl-0'><input id='name' class='table-control' v-model='item.name' type='text' name='item_name' value='" + name +"'></td><td class='table-price text-right'><input id='price'  class='table-control' v-model='item.price' type='text' name='price' value='" + price + "'></td><td class='table-qty text-center'><input id='qty' class='table-control' v-model='item.qty' type='text' name='qty' value=''></td><td class='table-total text-right pr-0'><input id='total' name='total' class='table-total'  v-model='item.total' type='text' disabled></td></tr>";
+                    
+                    $("#item_lines tr:last").after(markup);
+                });
+                $('#price, #qty').keyup(function(){
+                    var total = 0;
+                    var x = Number($("#price").val());
+                    var y = Number($("#qty").val());
+                    var total = x * y;
+                    $("#total").val(total);
+                });
+            });
+        </script>
+
+   
+"<tr><td><input type='checkbox' name='record'></td><td>" + name + "</td><td>" + email + "</td></tr>";
         <div class=" border-b-2 flex flex-auto">
             <x-list.button>
                 <a href = "{{ route('invoices.index') }}" class ="">Back</a>
             </x-list.button>
         </div>
 
+    
         <div id="invoice">
             <x-list.heading>New Invoice</x-list.heading>
             
@@ -48,10 +79,11 @@
                             <thead>
                                 <tr>
                                     <th class="border-0 pl-0 party-header" width="48.5%">
-                                        From
+                                        From 
                                     </th>
                                     <th class="border-0" width="3%"></th>
                                     <div class="float-right">
+                                        <span class=" button float-right font-bold ">Select the Client</span>
                                         <label for="get_client" class="font-bold">Search for client: </label>
                                         <select onclick="clientID()" name="get_client_id" id="get_client_id" class="">
                                             @foreach ($clients as $client)
@@ -132,46 +164,50 @@
                                 <tr>
                                     <th scope="col" class="border-0 pl-0"></th>
                                     <th scope="col" class="border-0 pl-0">Service</th>
-                                    <th scope="col" class="text-center border-0">Quantity</th>
                                     <th scope="col" class="text-right border-0">Price</th>                 
+                                    <th scope="col" class="text-center border-0">Quantity</th>
                                     <th scope="col" class="text-right border-0 pr-0">Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="item_lines">
                                 {{-- Items --}}
-                                <tr v-for="item in form.items" name="line_items">
-                                    <td class="table-remove">
-                                        <span @click="remove(product)" class="table-remove-btn">&times;</span>
-                                        {{-- <button name="remove" class="border btn-sm p-2 rounded">Remove</button> --}}
-                                    </td>
-                                    <td class="table-name pl-0" :class="{'table-error': errors['items.' + $index + '.name']}">
-                                        <input class="table-control" v-model="item.name" type="text" name="item_name">
-                                    </td>
-                                    <td class="table-qty text-center" :class="{'table-error': errors['items.' + $index + '.qty']}"">
-                                        <input class="table-control" v-model="item.qty" type="text" name="qty" value="">
-                                    </td>
-                                    <td class="table-price text-right" :class="{'table-error': errors['items.' + $index + '.price']}">
-                                        <input class="table-control" v-model="item.price" type="text" name="price" value="">
-                                    </td>
-                                    <td class="table-total text-right pr-0">
-                                        <span class="table-text">@{{ product.qty * product.price }}</span>
-                                        {{-- <input type="text" name="item_total" jAutoCalc="{qty} * {price}"> --}}
-                                    </td>
-                                </tr>
-                                {{-- Summary --}}
-                                <tr>
-                                    <td colspan="3" class="border-0"></td>
-                                    <td class="text-right pl-0">Grand total</td>
-                                    <td class="table-grand_total text-right pr-0 total-amount" :class="{'table-error': errors.grand_total]}">
-                                        <input type="text" class="table-grant_total_input" v-model="form.grand_total" name="grand_total" jAutoCalc="SUM({item_total})">
+                                    <tr v-for="item in form.items" name="line_items" >
+                                        <td class="table-remove">
+                                            <span @click="remove(product)" class="table-remove-btn">&times;</span>
+                                            {{-- <button name="remove" class="border btn-sm p-2 rounded">Remove</button> --}}
+                                        </td>
+                                        <td class="table-name pl-0" :class="{'table-error': errors['items.' + $index + '.name']}">
+                                            <input id="name" class="table-control" v-model="item.name" type="text" name="item_name">
+                                        </td>
+                                        <td class="table-price text-right" :class="{'table-error': errors['items.' + $index + '.price']}">
+                                            <input id="price" class="table-control" v-model="item.price" type="text" name="price" value="">
+                                        </td>
+                                        <td class="table-qty text-center" :class="{'table-error': errors['items.' + $index + '.qty']}"">
+                                            <input id="qty" class="table-control" v-model="item.qty" type="text" name="qty" value="">
+                                        </td> 
+                                        <td class="table-total text-right pr-0">
+                                            {{-- <span id="total" class="table-text">@{{ product.qty * product.price }}</span> --}}
+                                            <input id="total" name="total" class="table-total"  v-model="item.total" type="text"  disabled> 
 
-                                        {{-- <input type="text" name="grand_total" jAutoCalc="SUM({item_total})"> --}}
-                                    </td>
-                                </tr> 
+                                            {{-- <input type="text" name="item_total" jAutoCalc="{qty} * {price}"> --}}
+                                        </td>
+                                    </tr>
+                                {{-- Summary --}}
+                               
                             </tbody>
+                            <tr>
+                                <td colspan="3" class="border-0"></td>
+                                <td class="text-right pl-0">Grand total</td>
+                                <td class="table-grand_total text-right pr-0 total-amount" :class="{'table-error': errors.grand_total]}">
+                                    <input type="text" class="table-grant_total_input" v-model="form.grand_total" name="grand_total" jAutoCalc="SUM({item_total})">
+
+                                    {{-- <input type="text" name="grand_total" jAutoCalc="SUM({item_total})"> --}}
+                                </td>
+                            </tr>
+                         
                         </table>
                         <div class="mt-3">
-                            <div><button class="border p-2 rounded" type="button" name="add" id="add" class="btn btn-primary">Add Row</button></div>
+                            <div><button class="border p-2 rounded add-row" type="button" name="add" id="add" >Add Row</button></div>
                         </div>
                 
                         {{-- @if($invoice->notes)
@@ -182,30 +218,6 @@
                     </div>
                 <x-form.button> Save </x-form.button>
             </form>
-        </div>
-        {{-- <script src="js/jquery.min.js"></script>
-        <script src="js/jautocalc.js"></script>
-        <script src="js/script.js"></script> --}}
-       @push('scripts')
-           <script src="/js/vue.min.js"></script>
-           <script src="/js/vue-resource.min.js"></script>
-           <script src="js/invoice.js"></script>
-           <script type="text/javascript">
-                Vue.http.headers.common['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
-
-                window._form = {
-                    status = '',
-                    date = '',
-                    due_date = '',
-                    client_id = '',
-                    items = [{
-                        name = '',
-                        qty = 1,
-                        price = 0,
-                    }]
-                }
-           </script>
-           <script src="/js/app.js"></script>
-       @endpush      
+        </div>          
     </x-body>
 </x-layout>
