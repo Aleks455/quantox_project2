@@ -12,52 +12,51 @@
                     var markup = 
                     `<tr class='item${br} form-group' id='item${br}'>
                         <td class='table-remove'>
-                          <button type="button"  onclick='remove' name='remove' id='${br}' class='remove'>&times</button>
+                          <button type="button" id='${br}' class='remove'>&times</button>
                         </td>
                         <td class='table-name pl-0'>
-                            <input id='name' class='name' form-control' type='text' name='name[]'>
+                            <input id='name' class='name${br}' form-control' type='text' name='name[]'>
                         </td>
                         <td class='table-price text-right'>
-                            <input id='price' class='price' form-control' type='text' name='price[]' value=''>
+                            <input id='price' class='price${br}' form-control' type='text' name='price[]' value=''>
                         </td>
                         <td class='table-qty text-center'>
-                            <input id='qty' class='qty' form-control' type='text' name='qty[]' value=''>
+                            <input id='qty' class='qty${br}' form-control' type='text' name='qty[]' value=''>
                         </td> 
                         <td class='table-total text-right pr-0'>
-                            <input id='total' class='total' form-control' type='text' name='total[]'  disabled>
+                            <input id='total' class='total${br}' form-control' type='text' name='total[]'  disabled>
                         </td>
                     </tr>`;
                     
                     $("#item_lines tr:last").after(markup);
 
+                    $(".remove").on('click', function (e)
+                    {
+                        e.preventDefault();
+
+                        id = $(this).attr('id');
+                        $("#item"+id).remove();
+                        //or this
+                        // $(this).closest("#item" + id).remove();
+
+                    });
+
+                    // $('.price, .qty').keyup(function()
+                    // {
+                    //     var total = 0;
+
+                    //     var x = Number($(".price" + br).val());
+                    //     var y = Number($(".qty" + br).val());
+                    //     var total = x * y;
+                    //     $(".total" + br).val(total);
+                    // });
+
                     br++;
                 });
 
-                $(".remove").on('click', function (e)
-                {
-                    e.preventDefault();
+                   
 
-                    id = $(this).attr('id');
-                    $("#item"+id).remove();
-                    $(this).remove();
-
-                    // $(this).parents("tr").remove();
-                    // $(this).closest("#item" + id).remove();
-                    // $(this).closest("tr").remove();
-
-                });
-
-
-                $('.price, .qty').keyup(function()
-                {
-
-                    var total = 0;
-
-                    var x = Number($(".price").val());
-                    var y = Number($(".qty").val());
-                    var total = x * y;
-                    $(".total").val(total);
-                });
+               
                 
             });
         </script>
