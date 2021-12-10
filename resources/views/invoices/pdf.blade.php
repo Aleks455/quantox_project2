@@ -118,11 +118,6 @@
                         
                     </td>
                     <td class="border-0 pl-0">
-                        @if($invoice->status)
-                            <h4 class="text-uppercase cool-gray">
-                                {{-- <strong>{{ $invoice->status }}</strong> --}}
-                            </h4>
-                        @endif
                         <p><strong>Invoice no: {{ $invoice->id }} / 2021</strong></p>
                         <p> <strong>Invoice date: {{ $invoice->date }}</strong></p>
                         <p> <strong>Invoice due date: {{ $invoice->due_date }}</strong></p>
@@ -217,13 +212,6 @@
                     </tr> 
             </tbody>
         </table>
-
-        {{-- @if($invoice->notes)
-            <p>
-                Note: {!! $invoice->notes !!}
-            </p>
-        @endif --}}
-
         <p>Total amount is: ${{ $invoice->grand_total }}</p>
         <p>Please pay until: {{ $invoice->due_date }}</p>
     </body>

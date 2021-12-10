@@ -18,6 +18,12 @@
 
                 <x-form.button>Log in</x-form.button>
             </form>
+            @if($errors->any())
+                @foreach ($errors->all() as $error)
+                    <p class="text-red-500">{{ $error }}
+                    </p>
+                @endforeach
+            @endif
         </div>
     </div>
 </x-layout>

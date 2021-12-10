@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -13,7 +14,9 @@ class ClientController extends Controller
     public function index()
     {
         return view('clients.index', [         
-            'clients' => auth()->user()->clients()->latest()->paginate(10),
+            'clients' => auth()->user()->clients()->latest()
+            ->filter(request(['search']))
+            ->paginate(10)->withQueryString()
         ]);
     }
 
@@ -37,7 +40,8 @@ class ClientController extends Controller
             'country' => 'required|max:225',
         ]);
 
-        auth()->user()->clients()->create([
+        Client::create([
+            'user_id' => $request->user()->id,
             'name' => $request->name,
             'company_number' => $request->company_number,
             'vat_id' => $request->vat_id,

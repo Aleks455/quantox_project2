@@ -10,24 +10,15 @@
                 <a href="{{ route('invoices.create') }}" class=""> + Create New Invoice</a>
             </x-list.button>
         </div>
-    
-        <x-list.heading>Invoice List</x-list.heading>
 
-        <div class="space-y-2 lg:space-y-0 lg:space-x-4 mb-16 w-full">
-            <div class="m-auto p-4">
-                <!-- Search -->
-                <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
-                    <form method="GET" action="#">
-                        <input type="text"
-                            name="search"
-                            placeholder="Find something"
-                            class="bg-transparent placeholder-black font-semibold text-sm"
-                            value="{{ request('search') }}"
-                        >
-                    </form>
-                </div>
-            </div>
+        <x-list.heading>Invoice List</x-list.heading>
+      
+        <!-- Search -->
+        <div class="space-y-2 flex items-center lg:space-y-0 lg:space-x-4 mb-16 w-full">
+            <span class="font-bold">Search invoice by the client and due date:</span>
+            <x-list.search></x-list.search>
         </div>
+            
 
         <div id="app">
             <example-component></example-component>
@@ -46,11 +37,18 @@
                             <a href="{{ route('invoices.show', $invoice->id) }}" class="">View</a>
                         </x-list.button>
                         <x-list.button color="green"> 
+                            <a href="{{ route('generate_pdf', $invoice->id) }}" class="">Download</a>
+                        </x-list.button>
+                        {{-- <x-list.button color="green"> 
                             <a href="{{ route('generate_pdf', ['download' => 'pdf', 'invoice' => $invoice->id]) }}" class="">Download</a>
+                        </x-list.button> --}}
+                        <x-list.button color="yellow"> 
+                            <a href="{{ route('invoices.send',  $invoice->client->email) }}" class="">Send</a>
                         </x-list.button>
                         <x-list.button color="blue"> 
                             <a href="{{ route('invoices.edit',  $invoice->id) }}" class="">Edit</a>
                         </x-list.button>
+            
                        <form action="{{ route('invoices.destroy', $invoice->id) }}" class="inline">
                             @csrf
                             <x-list.button color="red"> 

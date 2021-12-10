@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-
+use App\Models\Item;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use FontLib\TrueType\Collection;
+use Illuminate\Support\Facades\Mail;
 use PhpParser\ErrorHandler\Collecting;
 
 class InvoiceController extends Controller
@@ -41,7 +43,7 @@ class InvoiceController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
 
         $this->validate($request,[
             'client_id' => 'required',   
@@ -49,20 +51,36 @@ class InvoiceController extends Controller
             'date' => 'required',
             'due_date' => 'required',
             'price' => 'required',
-            'quantity' => 'required',
+            'qty' => 'required',
             'total' => 'required',
         ]);
         // $request['due_date'] = Carbon::createFromFormat('m/d/Y', $request->due_date)->format('Y-m-d');
 
-        auth()->user()->invoices()->create([
+        $grand_total = 0;
+        foreach($request->total as $item_price) {
+            $grand_total += $item_price;
+        }
+
+        Invoice::create([
             'user_id' => auth()->user()->id,
             'client_id' => $request->client_id,
-            'grand_total' => $request->grand_total,
             'date' => Carbon::now()->format('Y-m-d'),
             'due_date' => $request->due_date,
-            'remember_token' =>request()->_token,
-            
+            'grand_total' => $grand_total,            
         ]);
+
+        for($i = 0; $i < sizeof($request->qty); $i++)
+        { 
+            $items[] = [
+                'invoice_id' => $this->id,
+                'name' => $request->name[$i],
+                'price' => $request->price[$i],
+                'qty' => $request->qty[$i],
+                'total' => $request->total[$i]
+            ];
+        }
+    
+        Item::insert($items);
         
     
 
@@ -105,41 +123,54 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index')->with('success','Product deleted successfully');
     }
 
-    public function pdfExport(Request $request, $id)
+    public function pdfExport(/*Request $request,*/ $id)
     {
         $invoice = Invoice::findOrFail($id);
         view()->share('invoice', $invoice);
         
-        if ($request->has('download')) {
+        // if ($request->has('download')) {
             PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
             $pdf = PDF::loadView('invoices.pdf', $invoice);
             return $pdf->download('invoice.pdf');
-        }
-        return view('invoices.show-one');
+        // }
+        // return view('invoices.index')->with('message', 'Invoice can't be found.');
     }
 
-    // public function formateDate($date)
+
+    // public function pdfLoad($id)
+    // {
+    //     $invoice = Invoice::findOrFail($id);
+    //     view()->share('invoice', $invoice);
+    //     PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+    //     $pdf = PDF::loadView('invoices.pdf', $invoice);
+    //     return $pdf;
+    // }
+
+    public function sendMail($email)
+    {
+            // $details = [
+            //     'title' => 'mail from Aleksandra',
+            //     'body' => 'This is for testing email using smtp',
+            // ];
+        Mail::to($email)->send(new WelcomeMail());
+        return new WelcomeMail();
+        
+        return redirect()->route('invoices.index')->with('success','Email was sent successfully.');
+ 
+
+        // dd("Email is Sent.");
+        
+    }
+
+      // public function formateDate($date)
     // {
     //     return Carbon::now()->format('m/d/Y');
     // }
 
-    // public function sendMail($email)
+    // public function addClient($client_id)
     // {
-    //     // $details = [
-    //     //     'title' => 'mail from Aleksandra',
-    //     //     'body' => 'This is for testing email using smtp',
-    //     // ];
-
-    //     // \Mail::to($email)->send(new \App\Mail\myMail($details));
-
-    //     // dd("Email is Sent.");
-        
+    //     return auth()->user()->clients()->finOrFail($client_id);
     // }
-
-    public function addClient($client_id)
-    {
-        return auth()->user()->clients()->finOrFail($client_id);
-    }
 
    
 

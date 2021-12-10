@@ -24,6 +24,14 @@ class Client extends Model
         'postal_code',
         'country',
     ];
+
+    public function scopeFilter($query)
+    {
+        if (request('search')) {
+            $query
+            ->where('name', 'like', '%' . request('search') . '%');
+        }
+    }
     
     public function user()
     {

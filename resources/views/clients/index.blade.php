@@ -7,6 +7,10 @@
         </div>
 
         <x-list.heading>Clients List</x-list.heading>
+        <div class="space-y-2 flex items-center lg:space-y-0 lg:space-x-4 mb-16 w-full">
+            <span class="font-bold">Search client by the name:</span>
+            <x-list.search></x-list.search>
+        </div>
 
         @if ($clients->count()) 
             @foreach ($clients as $client)

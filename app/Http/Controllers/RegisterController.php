@@ -26,15 +26,20 @@ class RegisterController extends Controller
             'terms' => 'required',
         ]);
 
+       
         User::create([
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'password' => Hash::make($request->password),
+            'password' => bcrypt($request->password),
             'remember_token' =>request()->_token,
         ]);
 
+
         Auth::attempt($request->only('email','password'));
+
+        // Auth::attempt($request);
+
 
         return redirect()->route('user');
 

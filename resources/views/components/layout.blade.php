@@ -17,7 +17,7 @@
         
         {{-- <script src="https://unpkg.com/vue@next"></script> --}}
 
-        <script src={{asset('js/jquery-3.6.0.min.js')}}></script>
+        <script type="text/javascript" src={{asset('js/jquery-3.6.0.min.js')}}></script>
 
     </head>
     <body class="bg-gray-200 text-sm text-gray-800 tracking-wider font-weight-500 mb-10">

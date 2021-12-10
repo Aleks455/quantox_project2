@@ -8,8 +8,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
+
         return view('dashboard', [         
-            'user' => auth()->user()
+            // 'user' => auth()->user()
         ]);
     }
 }
