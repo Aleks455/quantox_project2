@@ -43,7 +43,7 @@
                             <a href="{{ route('generate_pdf', ['download' => 'pdf', 'invoice' => $invoice->id]) }}" class="">Download</a>
                         </x-list.button> --}}
                         <x-list.button color="yellow"> 
-                            <a href="{{ route('invoices.send',  $invoice->client->email) }}" class="">Send</a>
+                            <a href="{{ route('invoices.send',  $invoice->id) }}" class="">Send</a>
                         </x-list.button>
                         <x-list.button color="blue"> 
                             <a href="{{ route('invoices.edit',  $invoice->id) }}" class="">Edit</a>

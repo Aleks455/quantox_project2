@@ -69,7 +69,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/invoices/edit/{invoice:id}', [InvoiceController::class, 'edit'])->name('invoices.edit')->middleware('auth');
     Route::post('/invoices/update', [InvoiceController::class, 'update'])->name('invoices.update')->middleware('auth');
     Route::get('/invoices/delete/{invoice:id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy')->middleware('auth');
-    
+    Route::get('/invoices/clients/getclient', [ClientController::class, 'getClient'])->name('invoices.clients.get_client')->middleware('auth');
+
     Route::get('/invoices/generate_pdf/{invoice}', [InvoiceController::class, 'pdfExport'])->name('generate_pdf')->middleware('auth');
     Route::get('/invoices/send/{email}', [InvoiceController::class, 'sendMail'])->name('invoices.send')->middleware('auth');
     

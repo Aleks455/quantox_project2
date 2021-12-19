@@ -69,6 +69,8 @@ class InvoiceController extends Controller
             'grand_total' => $grand_total,            
         ]);
 
+        // this
+
         for($i = 0; $i < sizeof($request->qty); $i++)
         { 
             $items[] = [
@@ -81,8 +83,18 @@ class InvoiceController extends Controller
         }
     
         Item::insert($items);
+
+        // of this 
         
-    
+        // for($i = 0; $i < sizeof($request->qty); $i++)
+        // {
+        //     Item::insert([
+        //         'invoice_id' => $this->id,
+        //         'qty' => $request->qty[$i],
+        //         'price' => $request->price[$i],
+        //         'total' => $request->total[$i]
+        //     ]);
+        // }
 
         return redirect()->route('invoices.index');
     }
@@ -137,23 +149,26 @@ class InvoiceController extends Controller
     }
 
 
-    // public function pdfLoad($id)
-    // {
-    //     $invoice = Invoice::findOrFail($id);
-    //     view()->share('invoice', $invoice);
-    //     PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-    //     $pdf = PDF::loadView('invoices.pdf', $invoice);
-    //     return $pdf;
-    // }
-
-    public function sendMail($email)
+    public function sendMail($id)
     {
+        $invoice = Invoice::findOrFail($id);
+        view()->share('invoice', $invoice);
             // $details = [
             //     'title' => 'mail from Aleksandra',
             //     'body' => 'This is for testing email using smtp',
             // ];
-        Mail::to($email)->send(new WelcomeMail());
-        return new WelcomeMail();
+        $pdf = PDF::loadView('invoices.pdf', $invoice);
+        
+        $data = ['email' => $invoice->email, 'date' => $invoice->date];
+        
+        Mail::send('email.my_mail', $data, function($message)use($data, $pdf) {
+            $message->to('oljabudala@gmail.com', 'oljabudala@gmail.com')
+            ->subject('Invoice')
+            ->attachData($pdf->output(), "invoice.pdf");
+        });
+
+        // Mail::to($email)->send(new WelcomeMail());
+        // return new WelcomeMail();
         
         return redirect()->route('invoices.index')->with('success','Email was sent successfully.');
  
@@ -161,6 +176,15 @@ class InvoiceController extends Controller
         // dd("Email is Sent.");
         
     }
+
+     // public function pdfLoad($id)
+    // {
+    //     $invoice = Invoice::findOrFail($id);
+    //     view()->share('invoice', $invoice);
+    //     PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+    //     $pdf = PDF::loadView('invoices.pdf', $invoice);
+    //     return $pdf;
+    // }
 
       // public function formateDate($date)
     // {

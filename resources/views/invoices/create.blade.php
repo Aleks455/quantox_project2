@@ -15,7 +15,7 @@
                           <button type="button" id='${br}' class='remove'>&times</button>
                         </td>
                         <td class='table-name pl-0'>
-                            <input id='name' class='name${br}' form-control' type='text' name='name[]'>
+                            <input id='name' class='name' form-control' type='text' name='name[]'>
                         </td>
                         <td class='table-price text-right'>
                             <input id='price' class='price${br}' form-control' type='text' name='price[]' value=''>
@@ -41,22 +41,79 @@
 
                     });
 
-                    // $('.price, .qty').keyup(function()
-                    // {
-                    //     var total = 0;
+                    // var input = $('.name');
 
-                    //     var x = Number($(".price" + br).val());
-                    //     var y = Number($(".qty" + br).val());
-                    //     var total = x * y;
-                    //     $(".total" + br).val(total);
-                    // });
+                    // var count = $('.name').length;
+                    // var i = 0;
+                    // // for(i = 0; i < count; i++) 
+                    // // {                            
+                    //     $('.price' + br, '.qty' + br).keyup(function()
+                    //     {
+                    //         var total = 0;
+
+                    //         var x = Number($('.price' + br).val());
+                    //         console.log($('.price' + br).val());
+
+                    //         var y = Number($(".qty" + br).val());
+                    //         var total = x * y;
+                    //         $(".total" + br).val(total);
+                            
+                    //     });
+
+                    // // }
+                    
 
                     br++;
                 });
 
-                   
+                $('#get_client_id').on('change', function(){
+                    // alert('proba');
+                    id_client = $(this).val();
+                    // console.log(id_client);
+                    // const token = $('meta[name="csrf-token"]').attr('content');
 
-               
+                    // $.ajaxSetup({
+                    //     headers: {
+                    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    //     }
+                    // });
+
+                    $.ajax({
+                        async: true,
+                        type: "GET",
+                        url: `clients/getclient`,
+                        data:{id_client:id_client },
+
+                        dataType: "json",
+
+                        success: function(data){
+
+                            // searchb(data);
+                            // console.log(data);
+                            showClient(data);
+
+
+                        },
+                        error: function(xhr, status, error) {
+                            // alert(xhr.responseText);
+                            alert(data.responseJSON.error);
+                        }
+                    });
+
+
+
+                });
+
+                function showClient(data)
+                {
+                  var markup2 = `<p> Client: <strong> ${data[0].name}</strong></p>
+                                        <p>Address: ${data[0].address}</p>
+                                        <p>VAT ID: ${data[0].vat_id}</p>
+                                        <p>Phone: ${data[0].phone_number}</p>
+                                        <input name="client_id" type="hidden value="${data[0].id}">`
+
+                    $('#client').html(markup2);
+                }
                 
             });
         </script>
@@ -79,6 +136,16 @@
                 </p>
             @endforeach
         @endif
+
+            <div class="">
+                <label for="get_client" class="font-bold">Search for client: </label>
+                <select  name="get_client_id" id="get_client_id" class="">
+                    @foreach ($clients as $client)
+                        {{ $client_id = $client->id }}
+                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         
         <form action="{{ route('invoices.store') }}" method="POST">
             @csrf             
@@ -122,17 +189,6 @@
                                     From 
                                 </th>
                                 <th class="border-0" width="3%"></th>
-                                <div class="float-right">
-                                    <span class=" button float-right font-bold ">Select the Client</span>
-                                    <label for="get_client" class="font-bold">Search for client: </label>
-                                    <select onclick="clientID()" name="get_client_id" id="get_client_id" class="">
-                                        @foreach ($clients as $client)
-                                            {{ $client_id = $client->id }}
-                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="client_id" id="client_id" value="{{ $client_id }}">
-                                </div>
                                 <th class="border-0 pl-0 party-header">
                                     To   
                                 </th>
@@ -177,11 +233,12 @@
                                 </td>
                                 <td class="border-0"></td>
                                 <td class="px-0">
+                                    <input type="hidden" name="client_id" id="client_id" value="{{ $client_id }}">
                                     @if($client->id)
-                                        <p>Client: <strong>{{$name = $client->name }}</strong></p>
-                                        <p>Address: {{ $client->address }}</p>
-                                        <p>VAT ID: {{ $client->vat_id }}</p>
-                                        <p>Phone: {{ $client->phone_number }}</p>
+                                    <div id="client">
+
+                                    </div>
+                                        
                                     @else
                                         <p class="text-red-500">
                                         Please add client: 

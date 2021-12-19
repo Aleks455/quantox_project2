@@ -104,4 +104,13 @@ class ClientController extends Controller
         return redirect()->route('clients');
     }
 
+    public function getClient()
+    {
+        // dd($_GET['id_client']);
+    //    $client =  Client::findOrFali($_GET['id_client']);
+        $client = Client::where('id', $_GET['id_client'])->get();
+        // Client::get($_GET['id_client']);
+        return json_encode($client);
+    }
+
 }
